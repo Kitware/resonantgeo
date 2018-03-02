@@ -27,7 +27,7 @@ services:
     entrypoint: ["bash", "/docker-entrypoint/provision.bash"]
     command: [
       "--broker", "amqp://guest@broker",
-      "--plugins", "minerva,database_assetstore,girder_ktile",
+      "--plugins", "minerva,database_assetstore,large_image",
       "--girder-host", "web",
       "--girder-port", "8080",
       "--girder-scheme", "http",
@@ -39,7 +39,7 @@ services:
       "--database", "mongodb://database:27017/girder"]
     build:
       context: ../..
-      dockerfile: devops/docker/Dockerfile
+      dockerfile: devops/docker/assets/Dockerfile
       args:
         MAKE_PARALLELISM: "${MAKE_PARALLELISM}"
 
@@ -58,7 +58,7 @@ services:
       - broker
     build:
       context: ../..
-      dockerfile: devops/docker/Dockerfile
+      dockerfile: devops/docker/assets/Dockerfile
       args:
         MAKE_PARALLELISM: "${MAKE_PARALLELISM}"
 
@@ -86,4 +86,4 @@ services:
       - web
     build:
       context: ../..
-      dockerfile: devops/docker/Dockerfile
+      dockerfile: devops/docker/assets/Dockerfile

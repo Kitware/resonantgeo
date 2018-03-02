@@ -31,6 +31,7 @@ RUN apt-get update                                         \
         openssl                                            \
         python                                             \
         python-pip                                         \
+        python-tk                                          \
         wget                                               \
         zlib1g-dev                                         \
  && apt-get build-dep -qy                                  \
@@ -92,21 +93,25 @@ ADD submodules/minerva /girder-components/plugins/minerva
 ADD submodules/database_assetstore \
     /girder-components/plugins/database_assetstore
 
-ADD submodules/girder_ktile \
-    /girder-components/plugins/girder_ktile
+ADD submodules/large_image \
+    /girder-components/plugins/large_image
 
 RUN girder-install plugin -f /girder-components/plugins/database_assetstore
-RUN girder-install plugin -f /girder-components/plugins/girder_ktile
+RUN girder-install plugin -f /girder-components/plugins/large_image
 RUN girder-install plugin -f /girder-components/plugins/minerva
 
 RUN pip install -e /girder/gaia                       \
  && pip install -r /girder/gaia/requirements.txt      \
  && pip install -e /girder-components/plugins/minerva
 
+RUN cd /girder-components/plugins/large_image          \
+ && python setup.py install || python setup.py install \
+ && pip install -e /girder-components/plugins/large_image[mapnik]
+
 RUN girder-install web --dev --plugins \
 autojoin,\
 database_assetstore,\
-girder_ktile,\
+large_image,\
 minerva
 
 RUN mkdir /docker-entrypoint

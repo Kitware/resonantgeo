@@ -4,7 +4,9 @@
 
 ```bash
 git clone git://github.com/kitware/resonantgeo
-cd resonantgeo/devops/docker
+cd resonantgeo
+git submodule update --init --recursive
+cd devops/docker
 
 # build options
 export MAKE_PARALLELISM="-j1" # default: -j4

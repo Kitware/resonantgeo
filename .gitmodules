@@ -10,9 +10,9 @@
 [submodule "submodules/girder_worker"]
 	path = submodules/girder_worker
 	url = git://github.com/girder/girder_worker
-[submodule "submodules/girder_ktile"]
-	path = submodules/girder_ktile
-	url = git://github.com/opengeoscience/girder_ktile
 [submodule "submodules/minerva"]
 	path = submodules/minerva
 	url = git://github.com/kitware/minerva
+[submodule "submodules/large_image"]
+	path = submodules/large_image
+	url = git://github.com/girder/large_image
