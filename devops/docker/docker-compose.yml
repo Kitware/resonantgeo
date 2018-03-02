@@ -52,7 +52,7 @@ services:
       "--database", "mongodb://database:27017/girder"
     ]
     ports:
-      - '8080:8080'
+      - "${GIRDER_PORT}:8080"
     links:
       - database
       - broker
