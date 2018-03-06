@@ -1,0 +1,18 @@
+[submodule "submodules/gaia"]
+	path = submodules/gaia
+	url = git://github.com/opendataanalytics/gaia
+[submodule "submodules/database_assetstore"]
+	path = submodules/database_assetstore
+	url = git://github.com/opengeoscience/database_assetstore
+[submodule "submodules/girder"]
+	path = submodules/girder
+	url = git://github.com/girder/girder
+[submodule "submodules/girder_worker"]
+	path = submodules/girder_worker
+	url = git://github.com/girder/girder_worker
+[submodule "submodules/minerva"]
+	path = submodules/minerva
+	url = git://github.com/kitware/minerva
+[submodule "submodules/large_image"]
+	path = submodules/large_image
+	url = git://github.com/girder/large_image

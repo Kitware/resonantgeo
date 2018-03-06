@@ -1,0 +1,89 @@
+version: "3"
+volumes:
+  worker_tmp: {}
+services:
+  broker:
+    image: rabbitmq
+    command: [
+      "rabbitmq-server",
+      "--hostname", "broker",
+      "--name"    , "broker"]
+
+  database:
+    image: mongo:3.0
+    volumes:
+      - "./volumes/database:/data/db"
+
+  docker:
+    image: 'docker:dind'
+    privileged: true
+    volumes:
+      - 'worker_tmp:/tmp'
+
+  provision:
+    links:
+      - database
+      - web
+    entrypoint: ["bash", "/docker-entrypoint/provision.bash"]
+    command: [
+      "--broker", "amqp://guest@broker",
+      "--plugins", "minerva,database_assetstore,large_image",
+      "--girder-host", "web",
+      "--girder-port", "8080",
+      "--girder-scheme", "http",
+      "--admin-name", "${GIRDER_ADMIN_NAME}",
+      "--admin-pass", "${GIRDER_ADMIN_PASS}",
+      "--user-name", "${GIRDER_USER_NAME}",
+      "--user-pass", "${GIRDER_USER_PASS}",
+      "--assetstore", "/local-assetstore",
+      "--database", "mongodb://database:27017/girder"]
+    build:
+      context: ../..
+      dockerfile: devops/docker/assets/Dockerfile
+      args:
+        MAKE_PARALLELISM: "${MAKE_PARALLELISM}"
+
+  web:
+    volumes:
+      - "./volumes/local-assetstore:/local-assetstore"
+    command: [
+      "--host", "0.0.0.0",
+      "--port", "8080",
+      "--database", "mongodb://database:27017/girder"
+    ]
+    ports:
+      - "${GIRDER_PORT}:8080"
+    links:
+      - database
+      - broker
+    build:
+      context: ../..
+      dockerfile: devops/docker/assets/Dockerfile
+      args:
+        MAKE_PARALLELISM: "${MAKE_PARALLELISM}"
+
+  worker:
+    volumes:
+      - 'worker_tmp:/tmp'
+    entrypoint: ["bash", "/docker-entrypoint/worker.bash"]
+    command: [
+      "--gc",
+      "--broker", "amqp://guest@broker",
+      "--plugins", "docker,girder_io",
+      "--girder-host", "web",
+      "--girder-port", "8080",
+      "--girder-scheme", "http",
+      "--docker-host", "docker",
+      "--docker-port", "2375",
+      "--docker-scheme", "tcp",
+      "--concurrency", "$GIRDER_WORKER_CONCURRENCY",
+      "--uid", "root",
+      "--gid", "root",
+      "--loglevel", "INFO"]
+    links:
+      - broker
+      - docker
+      - web
+    build:
+      context: ../..
+      dockerfile: devops/docker/assets/Dockerfile
