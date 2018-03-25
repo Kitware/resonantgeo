@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:6.13.0-stretch-browsers
+    working_directory: ~/project
+
+    steps:
+      - checkout
+      - run: yarn --version
+      - run: node --version
+      - run:
+          name: Install web deps
+          command: yarn
+          working_directory: web
+      - run:
+          name: Run web tests
+          command: yarn test
+          working_directory: web
+      - run:
+          name: Upload coverage
+          command: bash <(curl -s https://codecov.io/bash) -f web/test/unit/coverage/cobertura-coverage.xml
+
+      - store_artifacts:
+          path: web/test/unit/coverage/html
+
+      - save_cache:
+          paths:
+            - web/node_modules
+          key: web-dependencies-{{ checksum "web/yarn.lock" }}

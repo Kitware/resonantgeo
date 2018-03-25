@@ -25,7 +25,8 @@ module.exports = function karmaConfig(config) {
     coverageReporter: {
       dir: './coverage',
       reporters: [
-        { type: 'lcov', subdir: '.' },
+        { type: 'cobertura', subdir: '.' },
+        { type: 'html', subdir: 'html' },
         { type: 'text-summary' },
       ],
     },
