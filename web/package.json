@@ -10,12 +10,13 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "unit:debug": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
     "e2e": "echo 'e2e tests disabled for now' # node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2e",
+    "test": "npm run lint && npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue .",
     "build": "node build/build.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "eslint-plugin-vue": "^4.4.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^1.0.0"
@@ -45,7 +46,6 @@
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-loader": "^1.7.1",
-    "eslint-plugin-html": "^3.0.0",
     "eslint-plugin-import": "^2.7.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
