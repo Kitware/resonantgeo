@@ -14,6 +14,7 @@
           v-for="(item, i) in items"
           :key="i"
           value="true"
+          @click="$router.push('/hello')"
         >
           <v-list-tile-action>
             <v-icon v-html="item.icon"/>
@@ -75,16 +76,12 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-footer
-      :fixed="fixed"
-      app
-    >
-      <span>&copy; 2017</span>
-    </v-footer>
   </v-app>
 </template>
 
 <script>
+import router from './router';
+
 export default {
   name: 'App',
   data() {
@@ -102,5 +99,6 @@ export default {
       title: 'Vuetify.js',
     };
   },
+  router,
 };
 </script>
