@@ -13,7 +13,7 @@
           v-for="(item, i) in items"
           :key="i"
           value="true"
-          @click="$router.push('/hello')"
+          @click="$router.push(item.route)"
         >
           <v-list-tile-action>
             <v-icon v-html="item.icon"/>
@@ -37,7 +37,9 @@
       <v-toolbar-title v-text="title"/>
     </v-toolbar>
     <v-content>
-      <router-view/>
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
     </v-content>
     <v-navigation-drawer
       :right="right"
@@ -67,13 +69,18 @@ export default {
     return {
       clipped: false,
       items: [{
-        icon: 'bubble_chart',
-        title: 'Inspire',
+        icon: 'home',
+        title: 'Home',
+        route: '/',
+      }, {
+        icon: 'map',
+        title: 'Map',
+        route: '/map',
       }],
       miniVariant: true,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'ResonantGEO',
     };
   },
   router,
