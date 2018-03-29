@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import HelloWorld from '@/components/HelloWorld';
-import Map from '@/components/Map';
+import Viewport from '@/components/Viewport';
 
 Vue.use(Router);
 
@@ -10,7 +10,7 @@ export default new Router({
     {
       path: '/map',
       name: 'Map',
-      component: Map,
+      component: Viewport,
     },
     {
       path: '/',

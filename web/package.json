@@ -17,6 +17,8 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "eslint-plugin-vue": "^4.4.0",
+    "lodash": "^4.17.5",
+    "lodash-es": "^4.17.8",
     "pug": "^2.0.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",

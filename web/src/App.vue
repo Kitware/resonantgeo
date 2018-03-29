@@ -1,13 +1,6 @@
 <template lang="pug">
 v-app
-  v-navigation-drawer(
-    :mini-variant='miniVariant',
-    :clipped='clipped',
-    persistent,
-    enable-resize-watcher,
-    fixed,
-    app
-  )
+  side-panel
     v-list
       v-list-tile(
         v-for='(item, i) in items',
@@ -21,28 +14,36 @@ v-app
           v-list-tile-title(v-text='item.title')
 
   v-toolbar(:clipped-left='clipped', app)
-    v-btn(icon, @click.stop='miniVariant = !miniVariant')
-      v-icon(v-html="miniVariant ? 'chevron_right' : 'chevron_left'")
-    v-toolbar-title(v-text='title')
-  v-content
+    v-toolbar-title.px-2(v-text='title')
+  v-content(:style='{height: "calc(100vh - 64px)"}')
     keep-alive
       router-view
-  v-navigation-drawer(:right='right', v-model='rightDrawer', temporary, fixed, app)
+  side-panel(:right='true')
     v-list
-      v-list-tile(@click='right = !right')
+      v-list-tile
         v-list-tile-action
-          v-icon compare_arrows
-        v-list-tile-title Switch drawer (click me)
+          v-icon description
+        v-list-tile-title Details
 </template>
 
+<style lang="stylus">
+html,body,.application,.application--wrap
+  height 100vh
+  overflow hidden
+</style>
+
 <script>
+import SidePanel from './components/SidePanel';
 import router from './router';
 
 export default {
   name: 'App',
+  components: {
+    SidePanel,
+  },
   data() {
     return {
-      clipped: false,
+      clipped: true,
       items: [{
         icon: 'home',
         title: 'Home',
