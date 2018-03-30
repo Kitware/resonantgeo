@@ -60,7 +60,11 @@ ENV C_FORCE_ROOT=1
 RUN pip install GDAL==$(gdal-config --version)
 
 COPY submodules/girder_worker /worker
-RUN pip install -e /worker \
+
+# Here we have to pin girder-worker-utils because it installs
+# setuptools_scm which isn't compatible with installing packages
+# from a bare directory (not in a git repo).
+RUN pip install -e /worker girder-worker-utils==0.7.1 \
  && pip install -e /worker[girder_io,docker]
 
 RUN sh -c 'SET="girder-worker-config set"                        \
