@@ -15,9 +15,9 @@ v-app
 
   v-toolbar(:clipped-left='clipped', app)
     v-toolbar-title.px-2(v-text='title')
-  v-content(:style='{height: "calc(100vh - 64px)"}')
-    keep-alive
-      router-view
+
+  full-screen-viewport
+    router-view
   side-panel(:right='true')
     v-list
       v-list-tile
@@ -34,12 +34,14 @@ html,body,.application,.application--wrap
 
 <script>
 import SidePanel from './components/SidePanel';
+import FullScreenViewport from './components/FullScreenViewport';
 import router from './router';
 
 export default {
   name: 'App',
   components: {
     SidePanel,
+    FullScreenViewport,
   },
   data() {
     return {
