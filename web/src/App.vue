@@ -13,11 +13,16 @@ v-app
         v-list-tile-content
           v-list-tile-title(v-text='item.title')
 
-  v-toolbar(:clipped-left='clipped', app)
+  v-toolbar(app)
     v-toolbar-title.px-2(v-text='title')
 
   full-screen-viewport
-    router-view
+    router-view(
+      ref='map',
+      :initialCenter='center',
+      :initialZoom='zoom',
+      @viewport='updateViewport'
+    )
   side-panel(:right='true')
     v-list
       v-list-tile
@@ -45,7 +50,6 @@ export default {
   },
   data() {
     return {
-      clipped: true,
       items: [{
         icon: 'home',
         title: 'Home',
@@ -55,12 +59,23 @@ export default {
         title: 'Map',
         route: '/map',
       }],
-      miniVariant: true,
-      right: true,
-      rightDrawer: false,
       title: 'ResonantGEO',
     };
   },
+  computed: {
+    center() {
+      return this.$store.state.center;
+    },
+    zoom() {
+      return this.$store.state.zoom;
+    },
+  },
   router,
+  methods: {
+    updateViewport(viewport) {
+      this.$store.commit('setCenter', viewport.center);
+      this.$store.commit('setZoom', viewport.zoom);
+    },
+  },
 };
 </script>
