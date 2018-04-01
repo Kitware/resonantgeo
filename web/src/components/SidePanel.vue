@@ -61,11 +61,10 @@ export default {
       type: Number,
       default: 0,
     },
-  },
-  data() {
-    return {
-      expanded: true,
-    };
+    expanded: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     style() {
@@ -98,8 +97,7 @@ export default {
   },
   methods: {
     toggleExpand() {
-      this.expanded = !this.expanded;
-      this.$emit('expanded', this.expanded);
+      this.$emit('expand');
     },
   },
 };
