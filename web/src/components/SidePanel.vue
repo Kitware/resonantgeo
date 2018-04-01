@@ -11,6 +11,7 @@ v-navigation-drawer(
   :right='right'
 )
   v-btn.expand-button(
+    v-if='expansionButton',
     @click.stop='toggleExpand',
     :ripple='false',
     fixed,
@@ -62,6 +63,10 @@ export default {
       default: 0,
     },
     expanded: {
+      type: Boolean,
+      default: true,
+    },
+    expansionButton: {
       type: Boolean,
       default: true,
     },

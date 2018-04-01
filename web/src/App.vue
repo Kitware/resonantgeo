@@ -3,6 +3,7 @@ v-app
   side-panel(
     :top='$vuetify.application.bar + $vuetify.application.top',
     :expanded='leftPanel.expanded',
+    :expansionButton='leftPanel.expansionButton',
     @expand='leftPanel.expanded = !leftPanel.expanded'
   )
     v-list
@@ -31,6 +32,7 @@ v-app
     :right='true',
     :top='$vuetify.application.bar + $vuetify.application.top',
     :expanded='rightPanel.expanded',
+    :expansionButton='leftPanel.expansionButton',
     @expand='rightPanel.expanded = !rightPanel.expanded'
   )
     v-list
@@ -70,9 +72,11 @@ export default {
           route: '/map',
         }],
         expanded: true,
+        expansionButton: true,
       },
       rightPanel: {
         expanded: false,
+        expansionButton: true,
       },
       title: 'ResonantGEO',
     };
