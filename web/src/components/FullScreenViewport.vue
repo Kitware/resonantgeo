@@ -1,8 +1,14 @@
 <template lang="pug">
-v-content(:style='style')
+v-content.full-screen
   keep-alive
     slot
 </template>
+
+<style lang="stylus" scoped>
+.full-screen
+  height 100%
+  width 100%
+</style>
 
 <script>
 import debounce from 'lodash-es/debounce';
@@ -13,13 +19,6 @@ import 'vuelayers/lib/style.css';
 
 Vue.use(VueLayers);
 export default {
-  computed: {
-    style() {
-      return {
-        height: `calc(100vh = ${this.$vuetify.application.bar + this.$vuetify.application.top}px)`,
-      };
-    },
-  },
   methods: {
     // This is a hack to ensure that the map size is refreshed after the DOM
     // reflow has occurred.  It usually isn't necessary on resize events, but

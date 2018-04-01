@@ -53,6 +53,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    top: {
+      type: Number,
+      default: 0,
+    },
+    bottom: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -62,7 +70,8 @@ export default {
   computed: {
     style() {
       return {
-        marginTop: `${this.$vuetify.application.bar + this.$vuetify.application.top}px`,
+        marginTop: `${this.top}px`,
+        marginBottom: `${this.bottom}px`,
         opacity: this.opacity,
         top: `${this.margin}px`,
         bottom: `${this.margin}px`,

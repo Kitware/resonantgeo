@@ -1,6 +1,8 @@
 <template lang="pug">
 v-app
-  side-panel
+  side-panel(
+    :top='$vuetify.application.bar + $vuetify.application.top'
+  )
     v-list
       v-list-tile(
         v-for='(item, i) in items',
@@ -23,7 +25,10 @@ v-app
       :initialZoom='zoom',
       @viewport='updateViewport'
     )
-  side-panel(:right='true')
+  side-panel(
+    :right='true',
+    :top='$vuetify.application.bar + $vuetify.application.top'
+  )
     v-list
       v-list-tile
         v-list-tile-action
