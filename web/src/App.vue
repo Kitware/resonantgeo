@@ -11,7 +11,7 @@ v-app
         v-for='(item, i) in leftPanel.items',
         :key='i',
         value='true',
-        @click='$router.push(item.route)'
+        @click='$router.push(item.route)',
       )
         v-list-tile-action
           v-icon(v-html='item.icon')
@@ -25,6 +25,8 @@ v-app
     router-view(
       ref='map',
       :viewport.sync='viewport',
+      @pointer='pointer = $event',
+      @singleclick='click = $event'
     )
   side-panel(
     :right='true',
@@ -81,14 +83,12 @@ export default {
         center: [0, 0],
         zoom: 5,
       },
+      pointer: [0, 0],
+      click: [0, 0],
     };
   },
   router,
   methods: {
-    updateViewport(viewport) {
-      this.$store.commit('setCenter', viewport.center);
-      this.$store.commit('setZoom', viewport.zoom);
-    },
   },
 };
 </script>

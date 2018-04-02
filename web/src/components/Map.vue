@@ -4,7 +4,9 @@ vl-map.map-component(
   :controls='false',
   :load-tiles-while-animating='true',
   :load-tiles-while-interacting='true',
-  v-resize.quiet='onResize'
+  v-resize.quiet='onResize',
+  @pointermove='$emit("pointer", $event.coordinate)'
+  @singleclick='$emit("singleclick", $event.coordinate)'
 )
   vl-view(
     :center.sync='center',
