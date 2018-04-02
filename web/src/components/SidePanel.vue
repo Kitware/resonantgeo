@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     toggleExpand() {
-      this.$emit('expand');
+      this.$emit('expand', !this.expanded);
     },
   },
 };
