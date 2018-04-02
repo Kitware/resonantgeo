@@ -2,6 +2,8 @@
 vl-map.map-component(
   ref='viewer',
   :controls='false',
+  :load-tiles-while-animating='true',
+  :load-tiles-while-interacting='true',
   v-resize.quiet='onResize'
 )
   vl-view(
