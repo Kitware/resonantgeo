@@ -5,8 +5,8 @@ vl-map.map-component(
   v-resize.quiet='onResize'
 )
   vl-view(
-    :center.sync='center',
-    :zoom.sync= 'zoom'
+    :center.sync='mapCenter',
+    :zoom.sync= 'mapZoom'
   )
   vl-layer-tile
     vl-source-osm
@@ -22,27 +22,27 @@ import 'vuelayers/lib/style.css';
 Vue.use(VueLayers);
 export default {
   props: {
-    initialCenter: {
+    center: {
       type: Array,
       default: () => [0, 0],
     },
-    initialZoom: {
+    zoom: {
       type: Number,
       default: 5,
     },
   },
   data() {
     return {
-      center: this.initialCenter,
-      zoom: this.initialZoom,
+      mapCenter: this.center,
+      mapZoom: this.zoom,
     };
   },
   watch: {
-    center() {
-      this.emitViewportEvent();
+    mapCenter() {
+      this.$emit('update:center', this.mapCenter);
     },
-    zoom() {
-      this.emitViewportEvent();
+    mapZoom() {
+      this.$emit('update:zoom', this.mapZoom);
     },
   },
   methods: {
