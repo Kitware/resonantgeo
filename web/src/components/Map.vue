@@ -5,8 +5,10 @@ vl-map.map-component(
   v-resize.quiet='onResize'
 )
   vl-view(
-    :center.sync='mapCenter',
-    :zoom.sync= 'mapZoom'
+    :center.sync='center',
+    @update:center='emitViewportEvent',
+    :zoom.sync= 'zoom',
+    @update:zoom='emitViewportEvent',
   )
   vl-layer-tile
     vl-source-osm
@@ -22,28 +24,18 @@ import 'vuelayers/lib/style.css';
 Vue.use(VueLayers);
 export default {
   props: {
-    center: {
-      type: Array,
-      default: () => [0, 0],
-    },
-    zoom: {
-      type: Number,
-      default: 5,
+    viewport: {
+      type: Object,
+      default() {
+        return { center: [0, 0], zoom: 5 };
+      },
     },
   },
   data() {
     return {
-      mapCenter: this.center,
-      mapZoom: this.zoom,
+      center: this.viewport.center,
+      zoom: this.viewport.zoom,
     };
-  },
-  watch: {
-    mapCenter() {
-      this.$emit('update:center', this.mapCenter);
-    },
-    mapZoom() {
-      this.$emit('update:zoom', this.mapZoom);
-    },
   },
   methods: {
     // This is a hack to ensure that the map size is refreshed after the DOM
@@ -53,15 +45,11 @@ export default {
       this.$refs.viewer.refresh();
     }, 100),
     emitViewportEvent: debounce(function emitViewportEvent() {
-      this.$emit('viewport', {
+      this.$emit('update:viewport', {
         center: this.center,
         zoom: this.zoom,
       });
     }, 100),
-    setViewport(viewport) {
-      this.center = viewport.center;
-      this.zoom = viewport.zoom;
-    },
   },
 };
 </script>

@@ -24,9 +24,7 @@ v-app
   full-screen-viewport
     router-view(
       ref='map',
-      :center.sync='center',
-      :zoom.sync='zoom',
-      @viewport='updateViewport'
+      :viewport.sync='viewport',
     )
   side-panel(
     :right='true',
@@ -79,8 +77,10 @@ export default {
         expansionButton: true,
       },
       title: 'ResonantGEO',
-      center: [0, 0],
-      zoom: 5,
+      viewport: {
+        center: [0, 0],
+        zoom: 5,
+      },
     };
   },
   router,
