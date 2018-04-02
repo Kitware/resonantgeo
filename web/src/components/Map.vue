@@ -9,6 +9,7 @@ vl-map.map-component(
   @singleclick='$emit("singleclick", $event.coordinate)'
 )
   vl-view(
+    :projection='projection',
     :center.sync='center',
     @update:center='emitViewportEvent',
     :zoom.sync= 'zoom',
@@ -28,6 +29,10 @@ import 'vuelayers/lib/style.css';
 Vue.use(VueLayers);
 export default {
   props: {
+    projection: {
+      type: String,
+      default: 'EPSG:4326',
+    },
     viewport: {
       type: Object,
       default() {
