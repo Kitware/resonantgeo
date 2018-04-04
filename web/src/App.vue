@@ -17,6 +17,10 @@ v-app
           v-icon(v-html='item.icon')
         v-list-tile-content
           v-list-tile-title(v-text='item.title')
+    template(slot='footer')
+      v-spacer
+      v-icon content_copy
+      v-icon delete
 
   v-toolbar(app)
     v-toolbar-title.px-2(v-text='title')
@@ -40,6 +44,8 @@ v-app
         v-list-tile-action
           v-icon description
         v-list-tile-title Details
+    template(slot='footer')
+      | 143 Datasets
 </template>
 
 <style lang="stylus">

@@ -21,9 +21,17 @@ v-navigation-drawer(
   )
     v-icon(v-html='collapseIcon')
   slot
+  v-footer.footer(
+    v-if='footer',
+    :inset='true',
+    :absolute='true',
+    height='unset'
+  )
+    v-system-bar.status(status)
+      slot(name='footer')
 </template>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .navigation-drawer
   border 1px solid #ddd
   overflow visible
@@ -37,6 +45,19 @@ v-navigation-drawer(
     border-top 1px solid #ddd
     border-bottom 1px solid #ddd
 
+  .footer
+    height unset
+    min-height unset
+
+    .status
+      font-size 8pt
+      color #222
+      width 100%
+      padding-right 0
+
+      i
+        cursor pointer
+        color #222 !important
 </style>
 
 <script>
@@ -67,6 +88,10 @@ export default {
       default: true,
     },
     expansionButton: {
+      type: Boolean,
+      default: true,
+    },
+    footer: {
       type: Boolean,
       default: true,
     },
