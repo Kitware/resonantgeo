@@ -6,17 +6,24 @@ v-app
     :expansionButton='leftPanel.expansionButton',
     @expand='leftPanel.expanded = !leftPanel.expanded'
   )
-    v-list
-      v-list-tile(
-        v-for='(item, i) in leftPanel.items',
-        :key='i',
-        value='true',
-        @click='$router.push(item.route)',
-      )
-        v-list-tile-action
-          v-icon(v-html='item.icon')
-        v-list-tile-content
-          v-list-tile-title(v-text='item.title')
+    v-toolbar(dense, flat, class='transparent')
+      v-list.pa-0
+        v-list-tile(avatar)
+          v-list-tile-content
+            v-list-tile-title
+              | Areas of Interest
+        v-list-tile.darken(avatar)
+          v-list-tile-content
+            v-list-tile-title
+              v-text-field
+        v-list-tile.pointer(avatar)
+          v-list-tile-content
+            v-list-tile-title
+              | area_of_interest_1
+            v-list-tile-sub-title
+              | path/to/area
+          v-list-tile-action
+            v-icon(color='grey lighten-1') check_box_outline_blank
     template(slot='footer')
       v-spacer
       v-icon content_copy
@@ -42,16 +49,32 @@ v-app
     v-list
       v-list-tile
         v-list-tile-action
-          v-icon description
-        v-list-tile-title Details
-    template(slot='footer')
-      | 143 Datasets
+          v-icon filter_center_focus
+        v-list-tile-title Viewport
+      v-list-tile(avatar)
+        v-list-tile-content
+          v-list-tile-title Center
+          v-list-tile-sub-title(v-html='formatPosition(viewport.center)')
+      v-list-tile(avatar)
+        v-list-tile-content
+          v-list-tile-title Zoom
+          v-list-tile-sub-title(v-html='viewport.zoom')
+    span(slot='footer')
+      v-icon location_on
+      span(v-html='formatPosition(click)')
+
 </template>
 
 <style lang="stylus">
 html,body,.application,.application--wrap
   height 100vh
   overflow hidden
+
+.pointer
+  cursor pointer
+
+.darken
+  background-color #e0e0e0
 </style>
 
 <script>
@@ -95,6 +118,16 @@ export default {
   },
   router,
   methods: {
+    formatPosition(latlng) {
+      function toDMS(D) {
+        return [0|D, '° ', 0|(D<0?D=-D:D)%1*60, "' ", 0|D*60%1*60, '"'].join(''); // eslint-disable-line
+      }
+      const lon = toDMS(latlng[0]);
+      const lat = toDMS(latlng[1]);
+      const lonDir = lon < 0 ? 'W' : 'E';
+      const latDir = lat < 0 ? 'S' : 'N';
+      return `${lat}${latDir}, ${lon}${lonDir}`;
+    },
   },
 };
 </script>
