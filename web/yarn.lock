@@ -1128,7 +1128,7 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
 
-body-parser@1.18.2, body-parser@^1.16.1:
+body-parser@1.18.2, body-parser@^1.16.1, body-parser@^1.18.2:
   version "1.18.2"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.18.2.tgz#87678a19d84b47d859b83199bd59bce222b10454"
   dependencies:
@@ -1800,6 +1800,13 @@ concat-stream@^1.5.0, concat-stream@^1.5.2:
     inherits "^2.0.3"
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
+
+connect-api-mocker@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/connect-api-mocker/-/connect-api-mocker-1.3.6.tgz#d12cb65aadc10eac9578c1e414f833287b6f5bd7"
+  dependencies:
+    body-parser "^1.18.2"
+    chalk "^2.3.0"
 
 connect-history-api-fallback@^1.3.0:
   version "1.5.0"
