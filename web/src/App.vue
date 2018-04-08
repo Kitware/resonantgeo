@@ -1,33 +1,11 @@
 <template lang="pug">
 v-app
-  side-panel(
+  area-of-interest-panel(
     :top='$vuetify.application.bar + $vuetify.application.top',
     :expanded='leftPanel.expanded',
     :expansionButton='leftPanel.expansionButton',
     @expand='leftPanel.expanded = !leftPanel.expanded'
   )
-    v-toolbar(dense, flat, class='transparent')
-      v-list.pa-0
-        v-list-tile(avatar)
-          v-list-tile-content
-            v-list-tile-title
-              | Areas of Interest
-        v-list-tile.darken(avatar)
-          v-list-tile-content
-            v-list-tile-title
-              v-text-field
-        v-list-tile.pointer(avatar)
-          v-list-tile-content
-            v-list-tile-title
-              | area_of_interest_1
-            v-list-tile-sub-title
-              | path/to/area
-          v-list-tile-action
-            v-icon(color='grey lighten-1') check_box_outline_blank
-    template(slot='footer')
-      v-spacer
-      v-icon content_copy
-      v-icon delete
 
   v-toolbar(app)
     v-toolbar-title.px-2(v-text='title')
@@ -69,22 +47,18 @@ v-app
 html,body,.application,.application--wrap
   height 100vh
   overflow hidden
-
-.pointer
-  cursor pointer
-
-.darken
-  background-color #e0e0e0
 </style>
 
 <script>
 import SidePanel from './components/SidePanel';
+import AreaOfInterestPanel from './components/AreaOfInterestPanel';
 import FullScreenViewport from './components/FullScreenViewport';
 import router from './router';
 
 export default {
   name: 'App',
   components: {
+    AreaOfInterestPanel,
     SidePanel,
     FullScreenViewport,
   },
