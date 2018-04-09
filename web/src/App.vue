@@ -1,29 +1,22 @@
 <template lang="pug">
 v-app
-  side-panel
-    v-list
-      v-list-tile(
-        v-for='(item, i) in items',
-        :key='i',
-        value='true',
-        @click='$router.push(item.route)'
-      )
-        v-list-tile-action
-          v-icon(v-html='item.icon')
-        v-list-tile-content
-          v-list-tile-title(v-text='item.title')
-
-  v-toolbar(:clipped-left='clipped', app)
-    v-toolbar-title.px-2(v-text='title')
-
-  full-screen-viewport
+  v-toolbar(app, tabs)
+    v-tabs.mx-0(icons-and-text, :height='64', color='transparent')
+      v-tabs-slider
+      v-tab(to='/explore')
+        | Explore
+        v-icon zoom_out_map
+      v-tab(to='/focus')
+        | Focus
+        v-icon filter_center_focus
+    v-spacer
+    v-toolbar-title
+      | {{ title }}
+    v-spacer
+    v-btn.mx-3(icon, color='grey lighten-1')
+      v-icon(small) image
+  keep-alive
     router-view
-  side-panel(:right='true')
-    v-list
-      v-list-tile
-        v-list-tile-action
-          v-icon description
-        v-list-tile-title Details
 </template>
 
 <style lang="stylus">
@@ -32,17 +25,17 @@ html,body,.application,.application--wrap
   overflow hidden
 </style>
 
+<style lang="stylus" scoped>
+.tabs
+  width unset
+</style>
+
 <script>
-import SidePanel from './components/SidePanel';
-import FullScreenViewport from './components/FullScreenViewport';
 import router from './router';
 
 export default {
   name: 'App',
-  components: {
-    SidePanel,
-    FullScreenViewport,
-  },
+  components: {},
   data() {
     return {
       clipped: true,

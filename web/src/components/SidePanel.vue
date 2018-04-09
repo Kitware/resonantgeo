@@ -5,37 +5,16 @@ v-navigation-drawer(
   :disable-resize-watcher='true',
   floating,
   absolute,
+  :permanent='true',
   height='',
   :style='style',
   v-model='expanded',
   :right='right'
 )
-  v-btn.expand-button(
-    @click.stop='toggleExpand',
-    :ripple='false',
-    fixed,
-    right,
-    small,
-    :style='buttonStyle'
-  )
-    v-icon(v-html='collapseIcon')
   slot
 </template>
 
 <style lang="stylus" scoped>
-.navigation-drawer
-  border 1px solid #ddd
-  overflow visible
-
-  .expand-button
-    width 20px
-    min-width 20px
-    top 5px
-    background-color white !important
-    box-shadow none
-    border-top 1px solid #ddd
-    border-bottom 1px solid #ddd
-
 </style>
 
 <script>
@@ -53,16 +32,32 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  data() {
-    return {
-      expanded: true,
-    };
+    top: {
+      type: Number,
+      default: 0,
+    },
+    bottom: {
+      type: Number,
+      default: 0,
+    },
+    expanded: {
+      type: Boolean,
+      default: true,
+    },
+    expansionButton: {
+      type: Boolean,
+      default: true,
+    },
+    footer: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     style() {
       return {
-        marginTop: `${this.$vuetify.application.bar + this.$vuetify.application.top}px`,
+        marginTop: `${this.top}px`,
+        marginBottom: `${this.bottom}px`,
         opacity: this.opacity,
         top: `${this.margin}px`,
         bottom: `${this.margin}px`,
@@ -85,12 +80,6 @@ export default {
         return this.expanded ? 'keyboard_arrow_right' : 'keyboard_arrow_left';
       }
       return this.expanded ? 'keyboard_arrow_left' : 'keyboard_arrow_right';
-    },
-  },
-  methods: {
-    toggleExpand() {
-      this.expanded = !this.expanded;
-      this.$emit('expanded', this.expanded);
     },
   },
 };

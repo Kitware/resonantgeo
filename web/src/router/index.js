@@ -1,21 +1,19 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld';
-import Map from '@/components/Map';
+import ExplorePersona from '@/personas/ExplorePersona';
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: '/map',
-      name: 'Map',
-      component: Map,
+      path: '/',
+      redirect: '/explore',
     },
     {
-      path: '/',
-      name: 'Hello',
-      component: HelloWorld,
+      path: '/explore',
+      name: 'Explore',
+      component: ExplorePersona,
     },
   ],
 });
