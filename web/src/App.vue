@@ -4,7 +4,10 @@ v-app
     :top='$vuetify.application.bar + $vuetify.application.top',
     :expanded='leftPanel.expanded',
     :expansionButton='leftPanel.expansionButton',
-    @expand='leftPanel.expanded = !leftPanel.expanded'
+    :items='leftPanel.items',
+    :selected='leftPanel.selected',
+    @expand='leftPanel.expanded = !leftPanel.expanded',
+    @select='selectAOI',
   )
 
   v-toolbar(app)
@@ -66,16 +69,21 @@ export default {
     return {
       leftPanel: {
         items: [{
-          icon: 'home',
-          title: 'Home',
-          route: '/',
+          id: 0,
+          name: 'area_of_interest_1',
+          path: 'path/to/area1',
+          checked: true,
         }, {
-          icon: 'map',
-          title: 'Map',
-          route: '/map',
+          id: 1,
+          name: 'area_of_interest_2',
+          path: 'path/to/area2',
+        }, {
+          id: 2,
+          name: 'area_of_interest_3',
         }],
         expanded: true,
         expansionButton: true,
+        selected: 0,
       },
       rightPanel: {
         expanded: false,
@@ -92,15 +100,16 @@ export default {
   },
   router,
   methods: {
+    selectAOI(item) {
+      this.leftPanel.selected = item.id;
+    },
     formatPosition(latlng) {
       function toDMS(D) {
         return [0|D, '° ', 0|(D<0?D=-D:D)%1*60, "' ", 0|D*60%1*60, '"'].join(''); // eslint-disable-line
       }
       const lon = toDMS(latlng[0]);
       const lat = toDMS(latlng[1]);
-      const lonDir = lon < 0 ? 'W' : 'E';
-      const latDir = lat < 0 ? 'S' : 'N';
-      return `${lat}${latDir}, ${lon}${lonDir}`;
+      return `${lat}, ${lon}`;
     },
   },
 };

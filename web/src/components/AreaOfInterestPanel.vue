@@ -29,14 +29,16 @@ side-panel(
       )
 
   v-list.pa-0
-    v-list-tile.pointer(avatar)
-      v-list-tile-content
-        v-list-tile-title
-          | area_of_interest_1
-        v-list-tile-sub-title
-          | path/to/area
-      v-list-tile-action
-        v-icon(color='grey lighten-1') check_box_outline_blank
+    area-of-interest-item(
+      v-for='item in items',
+      :key='item.id',
+      :name='item.name',
+      :path='item.path',
+      :checked='checked[item.id]',
+      :selected='selected === item.id',
+      @check='toggleChecked(item)',
+      @select='$emit("select", item)'
+    )
   template(slot='footer')
     v-spacer
     v-icon content_copy
@@ -48,17 +50,19 @@ side-panel(
   cursor pointer
 
 .darken
-  background-color #e0e0e0 !important
+  background-color #eee !important
 
 button.smaller-button
   min-width 30px !important
 </style>
 
 <script>
+import AreaOfInterestItem from '@/components/AreaOfInterestItem';
 import SidePanel from '@/components/SidePanel';
 
 export default {
   components: {
+    AreaOfInterestItem,
     SidePanel,
   },
   props: {
@@ -69,6 +73,23 @@ export default {
     top: {
       type: Number,
       default: 0,
+    },
+    items: {
+      type: Array,
+      default: () => [],
+    },
+    selected: { // eslint-disable-line vue/require-prop-types
+      default: null,
+    },
+  },
+  data() {
+    return {
+      checked: {},
+    };
+  },
+  methods: {
+    toggleChecked(item) {
+      this.$set(this.checked, item.id, !this.checked[item.id]);
     },
   },
 };
