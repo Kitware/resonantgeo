@@ -1,11 +1,11 @@
 <template lang="pug">
-v-navigation-drawer(
+v-navigation-drawer.drawer-with-action-buttons(
   clipped,
   persistent,
   :disable-resize-watcher='true',
   floating,
   absolute,
-  :permanent='true',
+  permanent,
   height='',
   :style='style',
   v-model='expanded',
@@ -15,6 +15,8 @@ v-navigation-drawer(
 </template>
 
 <style lang="stylus" scoped>
+.navigation-drawer
+  overflow visible
 </style>
 
 <script>
@@ -22,7 +24,7 @@ export default {
   props: {
     opacity: {
       type: Number,
-      default: 0.9,
+      default: 1.0,
     },
     margin: {
       type: Number,
@@ -51,6 +53,10 @@ export default {
     footer: {
       type: Boolean,
       default: true,
+    },
+    actionButtons: {
+      type: Array,
+      default: () => [],
     },
   },
   computed: {
