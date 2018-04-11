@@ -1,10 +1,11 @@
 <template lang="pug">
-full-screen-viewport(
-  :rightPanel='false'
-)
-  map-view(slot='main')
+full-screen-viewport
+  map-view
 
-  template(slot='left')
+  side-panel(
+    :top='64',
+    :expanded='expanded'
+  )
     v-toolbar(flat)
       v-toolbar-title
         | Working Sets
@@ -13,28 +14,28 @@ full-screen-viewport(
         v-icon more_vert
 
     v-container.action-buttons.pa-0
-      v-card(:height='50')
+      v-card(height='50px')
         v-btn.action-button.ma-0(
           dark,
           depressed
           color='primary',
         )
           v-icon aspect_ratio
-      v-card(:height='50')
+      v-card(height='50px')
         v-btn.action-button.ma-0(
           dark,
           depressed
           color='primary',
         )
           v-icon adjust
-      v-card(:height='50')
+      v-card(height='50px')
         v-btn.action-button.ma-0(
           dark,
           depressed
           color='primary',
         )
           v-icon timeline
-      v-card(:height='50')
+      v-card(height='50px')
         v-btn.action-button.ma-0(
           dark,
           depressed
@@ -70,6 +71,7 @@ export default {
   },
   data() {
     return {
+      expanded: true,
       leftPanel: {
         actionButtons: [
           { icon: 'search' },

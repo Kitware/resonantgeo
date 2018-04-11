@@ -5,11 +5,11 @@ v-navigation-drawer.drawer-with-action-buttons(
   :disable-resize-watcher='true',
   floating,
   absolute,
-  permanent,
+  :mobile-break-point='0',
   height='',
   :style='style',
   v-model='expanded',
-  :right='right'
+  :right='right',
 )
   slot
 </template>
