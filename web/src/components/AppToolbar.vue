@@ -1,0 +1,57 @@
+<template lang="pug">
+v-toolbar(app, tabs)
+  slot(name='left')
+    v-tabs.mx-0(
+      v-if='tabs.length',
+      icons-and-text,
+      :height='64',
+      color='transparent'
+    )
+      v-tabs-slider
+      v-tab.tab(
+        v-for='tab in tabs',
+        :key='tab.title',
+        :to='tab.route',
+        @click='$emit("click-tab", tab)'
+      ) {{ tab.title }}
+        v-icon {{ tab.icon }}
+  v-spacer
+  slot(name='title')
+    v-toolbar-title {{ title }}
+  v-spacer
+  slot(name='right')
+    v-btn.mx-3(
+      v-if='userIcon'
+      icon,
+      color='grey lighten-1'
+      @click='$emit("click-user")'
+    )
+      v-icon(small) {{ userIcon }}
+</template>
+
+<style lang="stylus" scoped>
+.tabs
+  width unset
+
+  .tab
+    min-width 100px
+</style>
+
+<script>
+export default {
+  props: {
+    tabs: {
+      type: Array,
+      default: () => [],
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    userIcon: {
+      type: String,
+      default: '',
+    },
+  },
+};
+</script>

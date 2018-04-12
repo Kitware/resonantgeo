@@ -1,20 +1,10 @@
 <template lang="pug">
 v-app
-  v-toolbar(app, tabs)
-    v-tabs.mx-0(icons-and-text, :height='64', color='transparent')
-      v-tabs-slider
-      v-tab(to='/explore')
-        | Explore
-        v-icon zoom_out_map
-      v-tab(to='/focus')
-        | Focus
-        v-icon filter_center_focus
-    v-spacer
-    v-toolbar-title
-      | {{ title }}
-    v-spacer
-    v-btn.mx-3(icon, color='grey lighten-1')
-      v-icon(small) image
+  app-toolbar(
+    :tabs='tabs',
+    :title='title',
+    :userIcon='userIcon'
+  )
   keep-alive
     router-view
 </template>
@@ -28,30 +18,33 @@ html,body,.application,.application--wrap
 <style lang="stylus" scoped>
 .tabs
   width unset
+
+  .tab
+    min-width 100px
 </style>
 
 <script>
 import router from './router';
+import AppToolbar from './components/AppToolbar';
 
 export default {
   name: 'App',
-  components: {},
+  components: {
+    AppToolbar,
+  },
   data() {
     return {
-      clipped: true,
-      items: [{
-        icon: 'home',
-        title: 'Home',
-        route: '/',
-      }, {
-        icon: 'map',
-        title: 'Map',
-        route: '/map',
-      }],
-      miniVariant: true,
-      right: true,
-      rightDrawer: false,
       title: 'ResonantGEO',
+      tabs: [{
+        title: 'Explore',
+        route: '/explore',
+        icon: 'zoom_out_map',
+      }, {
+        title: 'Focus',
+        route: '/focus',
+        icon: 'filter_center_focus',
+      }],
+      userIcon: 'image',
     };
   },
   router,

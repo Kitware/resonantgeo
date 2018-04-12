@@ -1,64 +1,46 @@
 <template lang="pug">
 full-screen-viewport
-  map-view
+  ol-map-viewport
 
   side-panel(
     :top='64',
-    :expanded='expanded'
+    :toolbar='toolbar',
+    :actions='actions',
+    :expanded='expanded',
+    :right='false',
+    :footer='true'
   )
-    v-toolbar(flat)
-      v-toolbar-title
-        | Working Sets
-      v-spacer
-      v-btn(icon)
-        v-icon more_vert
+    v-expansion-panel
+      v-expansion-panel-content
+        div(slot='header') my_working_set_1
+        v-card
+          v-card-text.text-xs-center
+            | No filtered data sets
+    v-btn.ma-0(
+      dark,
+      depressed,
+      block,
+      large,
+      color='primary darken-1'
+    )
+      v-icon(left, dark) add_circle
+      | New Working Set
 
-    v-container.action-buttons.pa-0
-      v-card(height='50px')
-        v-btn.action-button.ma-0(
-          dark,
-          depressed
-          color='primary',
-        )
-          v-icon aspect_ratio
-      v-card(height='50px')
-        v-btn.action-button.ma-0(
-          dark,
-          depressed
-          color='primary',
-        )
-          v-icon adjust
-      v-card(height='50px')
-        v-btn.action-button.ma-0(
-          dark,
-          depressed
-          color='primary',
-        )
-          v-icon timeline
-      v-card(height='50px')
-        v-btn.action-button.ma-0(
-          dark,
-          depressed
-          color='primary',
-        )
-          v-icon open_in_browser
+    template(slot='footer')
+      v-spacer
+      v-icon(
+        @click='$emit("clear")'
+      ) delete_sweep
 </template>
 
 <style lang="stylus" scoped>
-.action-buttons
-  position fixed
-  top 64px
-  right -50px
-  width 50px
-
-  .action-button
-    min-width unset
-    width 100%
-    height 100%
+.footer
+  i
+    cursor pointer
 </style>
 
 <script>
-import MapView from '@/components/MapView';
+import OlMapViewport from '@/components/OlMapViewport';
 import SidePanel from '@/components/SidePanel';
 import FullScreenViewport from '@/components/FullScreenViewport';
 
@@ -67,17 +49,28 @@ export default {
   components: {
     SidePanel,
     FullScreenViewport,
-    MapView,
+    OlMapViewport,
   },
   data() {
     return {
-      expanded: true,
-      leftPanel: {
-        actionButtons: [
-          { icon: 'search' },
-          { icon: 'search' },
-        ],
+      toolbar: {
+        title: 'Working Sets',
+        icon: 'more_vert',
       },
+      actions: [{
+        name: 'draw-rectangle',
+        icon: 'aspect_ratio',
+      }, {
+        name: 'draw-point',
+        icon: 'adjust',
+      }, {
+        name: 'draw-line',
+        icon: 'timeline',
+      }, {
+        name: 'upload',
+        icon: 'open_in_browser',
+      }],
+      expanded: true,
     };
   },
 };
