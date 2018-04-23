@@ -9,6 +9,8 @@ describe('SidePanel.vue', () => {
         toolbar: false,
       },
     });
+    const nav = wrapper.find({ name: 'v-navigation-drawer' });
+    expect(nav.props()).property('right', false);
     expect(wrapper.contains('.toolbar')).to.equal(false);
   });
 
@@ -62,10 +64,29 @@ describe('SidePanel.vue', () => {
       },
     });
     expect(wrapper.contains('.action-buttons')).to.equal(true);
+
+    expect(parseInt(wrapper.find('.action-buttons').element.style.right, 10)).lessThan(0);
     expect(wrapper.find('.action-buttons .primary').text()).to.equal('aspect_ratio');
     expect(wrapper.find('.action-buttons .red').text()).to.equal('timeline');
 
     wrapper.find('.action-buttons button').trigger('click');
     expect(wrapper.emitted()).to.eql({ 'click-action': [['a']] });
+  });
+
+  it('right side panel', () => {
+    const wrapper = mount(SidePanel, {
+      propsData: {
+        actions: [{
+          name: 'a',
+          color: 'primary',
+          icon: 'aspect_ratio',
+        }],
+        right: true,
+      },
+    });
+
+    const nav = wrapper.find({ name: 'v-navigation-drawer' });
+    expect(nav.props()).property('right', true);
+    expect(parseInt(wrapper.find('.action-buttons').element.style.left, 10)).lessThan(0);
   });
 });

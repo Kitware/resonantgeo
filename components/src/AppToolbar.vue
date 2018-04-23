@@ -12,7 +12,7 @@ v-toolbar(app, tabs)
         v-for='tab in tabs',
         :key='tab.title',
         :to='tab.route',
-        @click='$emit("click-tab", tab)'
+        @click='$emit("click-tab", tab.title)'
       ) {{ tab.title }}
         v-icon {{ tab.icon }}
   v-spacer
