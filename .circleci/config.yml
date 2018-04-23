@@ -12,19 +12,19 @@ jobs:
       - run:
           name: Install web deps
           command: yarn
-          working_directory: web
+          working_directory: components
       - run:
           name: Run web tests
           command: yarn test
-          working_directory: web
+          working_directory: components
       - run:
           name: Upload coverage
-          command: bash <(curl -s https://codecov.io/bash) -f web/test/unit/coverage/cobertura-coverage.xml
+          command: bash <(curl -s https://codecov.io/bash) -f components/test/coverage/cobertura-coverage.xml
 
       - store_artifacts:
-          path: web/test/unit/coverage/html
+          path: components/test/coverage/html
 
       - save_cache:
           paths:
-            - web/node_modules
+            - components/node_modules
           key: web-dependencies-{{ checksum "web/yarn.lock" }}
