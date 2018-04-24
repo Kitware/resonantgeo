@@ -87,3 +87,5 @@ services:
     build:
       context: ../..
       dockerfile: devops/docker/assets/Dockerfile
+      args:
+        MAKE_PARALLELISM: "${MAKE_PARALLELISM}"

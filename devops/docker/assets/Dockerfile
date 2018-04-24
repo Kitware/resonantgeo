@@ -36,7 +36,7 @@ RUN apt-get update                                         \
         zlib1g-dev                                         \
  && apt-get build-dep -qy                                  \
         gdal                                               \
- && pip install -U pip                                     \
+ && pip install -U 'pip<10'                                \
  && pip install setuptools                                 \
  && apt-get clean                                          \
  && rm -rf /var/lib/apt/lists/*
