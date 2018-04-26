@@ -13,7 +13,8 @@ v-navigation-drawer.drawer-with-action-buttons(
 )
   slot(name='toolbar')
     v-toolbar(
-      v-if='toolbar'
+      v-if='toolbar',
+      :flat='true'
     )
       v-toolbar-title {{ toolbar.title }}
       v-spacer
@@ -44,8 +45,8 @@ v-navigation-drawer.drawer-with-action-buttons(
   slot
   v-footer.footer(
     v-if='footer',
-    :inset='true',
-    :absolute='true',
+    inset,
+    absolute,
     height='unset'
   )
     v-system-bar.status(status)
