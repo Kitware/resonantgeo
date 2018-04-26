@@ -27,4 +27,4 @@ jobs:
       - save_cache:
           paths:
             - components/node_modules
-          key: web-dependencies-{{ checksum "web/yarn.lock" }}
+          key: web-dependencies-{{ checksum "components/yarn.lock" }}
