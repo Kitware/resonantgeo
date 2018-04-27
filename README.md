@@ -2,13 +2,53 @@
 
 ## Quick Start Instructions
 
+First, you will need a recent version of `docker` (the `docker.io` package from
+Ubuntu is too old).  You will also need a recent version of `docker-compose`
+(the default version from pip should be fine).
+
+Below is an example of versions of `docker` client, `docker` server, and
+`docker-compose` that are known to work:
+
+```bash
+docker version && docker-compose version
+```
+```
+Client:
+ Version:	18.03.0-ce
+ API version:	1.37
+ Go version:	go1.9.4
+ Git commit:	0520e24
+ Built:	Wed Mar 21 23:06:22 2018
+ OS/Arch:	darwin/amd64
+ Experimental:	false
+ Orchestrator:	swarm
+
+Server:
+ Engine:
+  Version:	18.03.0-ce
+  API version:	1.37 (minimum version 1.12)
+  Go version:	go1.9.4
+  Git commit:	0520e24
+  Built:	Wed Mar 21 23:14:32 2018
+  OS/Arch:	linux/amd64
+  Experimental:	true
+
+docker-compose version 1.20.1, build 5d8c71b
+docker-py version: 3.1.4
+CPython version: 3.6.4
+OpenSSL version: OpenSSL 1.0.2n  7 Dec 2017
+```
+
+Once you have the right versions of the Docker tools, clone this repo and spin
+up the prepared development environment.
+
 ```bash
 git clone git://github.com/kitware/resonantgeo
 cd resonantgeo
 git submodule update --init --recursive
 cd devops/docker
 
-# build options
+# build options - edit to taste
 export MAKE_PARALLELISM="-j1" # default: -j4
 
 # runtime options
