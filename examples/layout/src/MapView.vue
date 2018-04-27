@@ -1,6 +1,9 @@
 <template lang="pug">
 full-screen-viewport
-  ol-map-viewport
+  geojs-map-viewport(
+    :viewport.sync='viewport',
+    @click='clicked = $event'
+  )
 
   side-panel(
     :top='64',
@@ -36,6 +39,19 @@ full-screen-viewport
     :toolbar='infoToolbar',
     @click-toolbar='infoToolbar.open = false'
   )
+    v-list
+      v-list-tile
+        v-list-tile-action
+          v-icon filter_center_focus
+        v-list-tile-title Last point clicked
+      v-list-tile(
+        v-if='clicked',
+        avatar
+      )
+        v-list-tile-content
+          v-list-tile-title
+            | {{ clicked[0].toFixed(4) }}°, {{ clicked[1].toFixed(4) }}°
+
 </template>
 
 <style lang="stylus" scoped>
@@ -46,7 +62,7 @@ full-screen-viewport
 
 <script>
 import FullScreenViewport from 'resonantgeo/FullScreenViewport';
-import OlMapViewport from 'resonantgeo/OlMapViewport';
+import GeojsMapViewport from 'resonantgeo/GeojsMapViewport';
 import SidePanel from 'resonantgeo/SidePanel';
 
 export default {
@@ -54,10 +70,14 @@ export default {
   components: {
     FullScreenViewport,
     SidePanel,
-    OlMapViewport,
+    GeojsMapViewport,
   },
   data() {
     return {
+      viewport: {
+        center: [-100, 30],
+        zoom: 4,
+      },
       panel: {
         items: 2,
         toolbar: {
@@ -78,6 +98,7 @@ export default {
         title: 'Info',
         icon: 'close',
       },
+      clicked: null,
     };
   },
   methods: {
