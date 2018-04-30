@@ -2,7 +2,7 @@ import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
 import { createLocalVue, mount } from '@vue/test-utils';
 
-import AppToolbar from '@/AppToolbar';
+import AppToolbar from '@/components/AppToolbar';
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);
