@@ -1,0 +1,6 @@
+.git/
+devops/
+examples/
+node_modules/
+submodules/
+test/
