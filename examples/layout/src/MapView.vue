@@ -61,17 +61,8 @@ full-screen-viewport
 </style>
 
 <script>
-import FullScreenViewport from 'resonantgeo/components/FullScreenViewport';
-import GeojsMapViewport from 'resonantgeo/components/GeojsMapViewport';
-import SidePanel from 'resonantgeo/components/SidePanel';
-
 export default {
   name: 'MapView',
-  components: {
-    FullScreenViewport,
-    SidePanel,
-    GeojsMapViewport,
-  },
   data() {
     return {
       viewport: {

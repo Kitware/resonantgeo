@@ -1,13 +1,13 @@
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 
-import components from './components';
+import * as components from './components';
 
 function install(Vue) {
   Vue.use(Vuetify);
 
-  components.forEach((component, name) => {
-    Vue.component(name, component);
+  Object.keys(components).forEach((name) => {
+    Vue.component(name, components[name]);
   });
 }
 

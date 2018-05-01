@@ -54,15 +54,13 @@ html,body,.application,.application--wrap
 </style>
 
 <script>
-import AppToolbar from 'resonantgeo/components/AppToolbar';
-import SidePanel from 'resonantgeo/components/SidePanel';
+import Vue from 'vue';
+import ResonantGeo from 'resonantgeo';
+
+Vue.use(ResonantGeo);
 
 export default {
   name: 'App',
-  components: {
-    AppToolbar,
-    SidePanel,
-  },
   data() {
     return {
       title: 'ResonantGEO Application Layout',

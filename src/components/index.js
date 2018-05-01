@@ -3,7 +3,7 @@ import FullScreenViewport from './FullScreenViewport';
 import GeojsMapViewport from './GeojsMapViewport';
 import SidePanel from './SidePanel';
 
-export default {
+export {
   AppToolbar,
   FullScreenViewport,
   GeojsMapViewport,

@@ -10,7 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "resonantgeo": "file:../../src",
+    "resonantgeo": "file:../../",
     "vue": "^2.5.11",
     "vue-router": "^3.0.1"
   },
@@ -28,6 +28,9 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.4",
+    "postcss-import": "^11.1.0",
+    "postcss-loader": "^2.1.4",
+    "postcss-url": "^7.3.2",
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
     "stylus": "^0.54.5",
