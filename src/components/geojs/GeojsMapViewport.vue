@@ -30,17 +30,17 @@ export default {
     },
   },
   mounted() {
-    this.map = geo.map({
+    this.$geojsMap = geo.map({
       node: this.$el,
       zoom: this.zoom,
       center: this.viewport.center,
       rotation: this.viewport.rotation,
     });
-    this.map.createLayer('osm');
-    this.map.geoOn(geo.event.pan, () => {
+    this.$geojsMap.createLayer('osm');
+    this.$geojsMap.geoOn(geo.event.pan, () => {
       this.emitViewportEvents();
     });
-    this.map.geoOn(geo.event.mouseclick, (evt) => {
+    this.$geojsMap.geoOn(geo.event.mouseclick, (evt) => {
       this.$emit('click', [evt.geo.x, evt.geo.y]);
     });
 
@@ -50,17 +50,17 @@ export default {
     }
   },
   beforeDestroy() {
-    if (this.map) {
-      this.map.exit();
+    if (this.$geojsMap) {
+      this.$geojsMap.exit();
     }
   },
   methods: {
     emitViewportEventsSync() {
-      const center = this.map.center();
+      const center = this.$geojsMap.center();
       this.$emit('update:viewport', {
         center: [center.x, center.y],
-        zoom: this.map.zoom(),
-        rotation: this.map.rotation(),
+        zoom: this.$geojsMap.zoom(),
+        rotation: this.$geojsMap.rotation(),
       });
     },
   },

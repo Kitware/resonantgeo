@@ -1,7 +1,7 @@
 import geo from 'geojs';
 import { mount } from '@vue/test-utils';
 
-import GeojsMapViewport from '@/components/GeojsMapViewport';
+import GeojsMapViewport from '@/components/geojs/GeojsMapViewport';
 
 describe('GeojsMapViewport.vue', () => {
   const delta = 1e-6;
@@ -27,7 +27,7 @@ describe('GeojsMapViewport.vue', () => {
         },
       },
     });
-    const map = wrapper.vm.map;
+    const map = wrapper.vm.$geojsMap;
     expect(map.center().x).closeTo(15, delta);
     expect(map.center().y).closeTo(10, delta);
     expect(map.zoom()).closeTo(4, delta);
@@ -40,7 +40,7 @@ describe('GeojsMapViewport.vue', () => {
         debounce: 0,
       },
     });
-    wrapper.vm.map.center({ x: -10, y: -15 });
+    wrapper.vm.$geojsMap.center({ x: -10, y: -15 });
     expect(wrapper.emitted()).property('update:viewport');
     const vp = wrapper.emitted()['update:viewport'];
     expect(vp).lengthOf(1);
@@ -55,7 +55,7 @@ describe('GeojsMapViewport.vue', () => {
         debounce: 10,
       },
     });
-    wrapper.vm.map.center({ x: -10, y: -15 });
+    wrapper.vm.$geojsMap.center({ x: -10, y: -15 });
 
     return new Promise((resolve) => {
       expect(wrapper.emitted()).not.property('update:viewport');
@@ -74,7 +74,7 @@ describe('GeojsMapViewport.vue', () => {
 
   it('respond to click events', () => {
     const wrapper = mount(GeojsMapViewport);
-    wrapper.vm.map.geoTrigger(geo.event.mouseclick, {
+    wrapper.vm.$geojsMap.geoTrigger(geo.event.mouseclick, {
       geo: { x: -15, y: 10 },
     });
     expect(wrapper.emitted()).property('click');
@@ -83,8 +83,8 @@ describe('GeojsMapViewport.vue', () => {
 
   it('map exits on component destroy', () => {
     const wrapper = mount(GeojsMapViewport);
-    sinon.spy(wrapper.vm.map, 'exit');
+    sinon.spy(wrapper.vm.$geojsMap, 'exit');
     wrapper.destroy();
-    wrapper.vm.map.exit.should.have.been.calledOnce;
+    wrapper.vm.$geojsMap.exit.should.have.been.calledOnce;
   });
 });
