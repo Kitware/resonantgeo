@@ -1,0 +1,7 @@
+/devops/
+/submodules/
+/dist/
+/*.js
+/test/coverage/
+/examples/*/build/**
+**/node_modules/**

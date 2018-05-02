@@ -54,15 +54,13 @@ html,body,.application,.application--wrap
 </style>
 
 <script>
-import AppToolbar from 'resonantgeo/AppToolbar';
-import SidePanel from 'resonantgeo/SidePanel';
+import Vue from 'vue';
+import ResonantGeo from 'resonantgeo';
+
+Vue.use(ResonantGeo);
 
 export default {
   name: 'App',
-  components: {
-    AppToolbar,
-    SidePanel,
-  },
   data() {
     return {
       title: 'ResonantGEO Application Layout',
@@ -81,7 +79,7 @@ export default {
         email: '',
         password: '',
         rules: [
-          (v) => !!v || 'Field is required',
+          v => !!v || 'Field is required',
         ],
       },
     };
@@ -89,7 +87,7 @@ export default {
   methods: {
     submitLogin() {
       if (this.$refs.login.validate()) {
-        console.log(`logged in as ${this.login.email}`);
+        console.log(`logged in as ${this.login.email}`); // eslint-disable-line no-console
         this.loginDialog = false;
       }
     },

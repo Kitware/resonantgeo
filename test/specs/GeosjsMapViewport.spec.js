@@ -1,7 +1,7 @@
 import geo from 'geojs';
 import { mount } from '@vue/test-utils';
 
-import GeojsMapViewport from '@/GeojsMapViewport';
+import GeojsMapViewport from '@/components/GeojsMapViewport';
 
 describe('GeojsMapViewport.vue', () => {
   const delta = 1e-6;

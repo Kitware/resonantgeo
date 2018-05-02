@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 
-import SidePanel from '@/SidePanel';
+import SidePanel from '@/components/SidePanel';
 
 describe('SidePanel.vue', () => {
   it('no toolbar', () => {
