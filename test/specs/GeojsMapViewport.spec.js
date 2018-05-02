@@ -12,11 +12,6 @@ describe('GeojsMapViewport.vue', () => {
     console.warn.restore(); // eslint-disable-line no-console
   });
 
-  it('render with base layer', () => {
-    const wrapper = mount(GeojsMapViewport);
-    expect(wrapper.find('.geojs-layer.active').exists()).equal(true);
-  });
-
   it('initialize viewport as props', () => {
     const wrapper = mount(GeojsMapViewport, {
       propsData: {
@@ -83,8 +78,10 @@ describe('GeojsMapViewport.vue', () => {
 
   it('map exits on component destroy', () => {
     const wrapper = mount(GeojsMapViewport);
-    sinon.spy(wrapper.vm.$geojsMap, 'exit');
+    const spy = sinon.spy(wrapper.vm.$geojsMap, 'exit');
+
     wrapper.destroy();
-    wrapper.vm.$geojsMap.exit.should.have.been.calledOnce;
+    spy.should.have.been.calledOnce;
+    spy.restore();
   });
 });

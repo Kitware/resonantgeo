@@ -5,6 +5,11 @@ import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(Vuetify);
 
+// This is necessary to silence warnings about mutating props, which
+// seems to be a bug in @vue/test-utils:
+//   https://github.com/vuejs/vue-test-utils/issues/534
+Vue.config.silent = true;
+
 Vue.config.productionTip = false;
 
 // require all test files (files that ends with .spec.js)

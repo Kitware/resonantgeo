@@ -1,5 +1,6 @@
 <template lang="pug">
 .geojs-map
+  slot(v-if='ready')
 </template>
 
 <style lang="stylus" scoped>
@@ -29,14 +30,19 @@ export default {
       default: 100,
     },
   },
+  data() {
+    return {
+      ready: false,
+    };
+  },
   mounted() {
+    this.$geojs = geo;
     this.$geojsMap = geo.map({
       node: this.$el,
       zoom: this.zoom,
       center: this.viewport.center,
       rotation: this.viewport.rotation,
     });
-    this.$geojsMap.createLayer('osm');
     this.$geojsMap.geoOn(geo.event.pan, () => {
       this.emitViewportEvents();
     });
@@ -48,11 +54,10 @@ export default {
     if (this.debounce > 0) {
       this.emitViewportEvents = debounce(this.emitViewportEventsSync, this.debounce);
     }
+    this.ready = true;
   },
   beforeDestroy() {
-    if (this.$geojsMap) {
-      this.$geojsMap.exit();
-    }
+    this.$geojsMap.exit();
   },
   methods: {
     emitViewportEventsSync() {
