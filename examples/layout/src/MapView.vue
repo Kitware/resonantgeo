@@ -4,6 +4,12 @@ full-screen-viewport
     :viewport.sync='viewport',
     @click='clicked = $event'
   )
+    geojs-tile-layer(
+      v-if='baseLayer',
+      :url='url',
+      :attribution='attribution',
+      :opacity='opacity'
+    )
 
   side-panel(
     :top='64',
@@ -65,6 +71,10 @@ export default {
   name: 'MapView',
   data() {
     return {
+      baseLayer: true,
+      opacity: 1,
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution: 'Tile data &copy; <a href="http://osm.org/copyright"> OpenStreetMap</a> contributors',
       viewport: {
         center: [-100, 30],
         zoom: 4,

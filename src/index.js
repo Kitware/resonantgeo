@@ -1,14 +1,23 @@
+import forOwn from 'lodash-es/forOwn';
+import isFunction from 'lodash-es/isFunction';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 
 import * as components from './components';
 
+function recursiveInstall(Vue, module) {
+  forOwn(module, (component, name) => {
+    if (isFunction(component.render)) {
+      Vue.component(name, component);
+    } else if (component.__esModule) {  // eslint-disable-line no-underscore-dangle
+      recursiveInstall(Vue, component);
+    }
+  });
+}
+
 function install(Vue) {
   Vue.use(Vuetify);
-
-  Object.keys(components).forEach((name) => {
-    Vue.component(name, components[name]);
-  });
+  recursiveInstall(Vue, components);
 }
 
 export default {

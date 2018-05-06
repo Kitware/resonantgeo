@@ -1,5 +1,6 @@
 <template lang="pug">
 .geojs-map
+  slot(v-if='ready')
 </template>
 
 <style lang="stylus" scoped>
@@ -29,18 +30,23 @@ export default {
       default: 100,
     },
   },
+  data() {
+    return {
+      ready: false,
+    };
+  },
   mounted() {
-    this.map = geo.map({
+    this.$geojs = geo;
+    this.$geojsMap = geo.map({
       node: this.$el,
       zoom: this.zoom,
       center: this.viewport.center,
       rotation: this.viewport.rotation,
     });
-    this.map.createLayer('osm');
-    this.map.geoOn(geo.event.pan, () => {
+    this.$geojsMap.geoOn(geo.event.pan, () => {
       this.emitViewportEvents();
     });
-    this.map.geoOn(geo.event.mouseclick, (evt) => {
+    this.$geojsMap.geoOn(geo.event.mouseclick, (evt) => {
       this.$emit('click', [evt.geo.x, evt.geo.y]);
     });
 
@@ -48,19 +54,18 @@ export default {
     if (this.debounce > 0) {
       this.emitViewportEvents = debounce(this.emitViewportEventsSync, this.debounce);
     }
+    this.ready = true;
   },
   beforeDestroy() {
-    if (this.map) {
-      this.map.exit();
-    }
+    this.$geojsMap.exit();
   },
   methods: {
     emitViewportEventsSync() {
-      const center = this.map.center();
+      const center = this.$geojsMap.center();
       this.$emit('update:viewport', {
         center: [center.x, center.y],
-        zoom: this.map.zoom(),
-        rotation: this.map.rotation(),
+        zoom: this.$geojsMap.zoom(),
+        rotation: this.$geojsMap.rotation(),
       });
     },
   },
