@@ -1,8 +1,7 @@
 {
   "name": "resonantgeo",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "An application for development of Resonant Geo components",
-  "author": "kitware@kitware.com",
   "license": "Apache-2.0",
   "scripts": {
     "unit": "cross-env BABEL_ENV=test karma start test/karma.conf.js --single-run",
