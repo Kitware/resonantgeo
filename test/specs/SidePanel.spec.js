@@ -40,39 +40,6 @@ describe('SidePanel.vue', () => {
     expect(wrapper.find('.toolbar button').text()).to.equal('more_vert');
   });
 
-  it('no action buttons', () => {
-    const wrapper = mount(SidePanel, {
-      propsData: {
-        actions: false,
-      },
-    });
-    expect(wrapper.contains('.action-buttons')).to.equal(false);
-  });
-
-  it('with action buttons', () => {
-    const wrapper = mount(SidePanel, {
-      propsData: {
-        actions: [{
-          name: 'a',
-          color: 'primary',
-          icon: 'aspect_ratio',
-        }, {
-          name: 'b',
-          color: 'red',
-          icon: 'timeline',
-        }],
-      },
-    });
-    expect(wrapper.contains('.action-buttons')).to.equal(true);
-
-    expect(parseInt(wrapper.find('.action-buttons').element.style.right, 10)).lessThan(0);
-    expect(wrapper.find('.action-buttons .primary').text()).to.equal('aspect_ratio');
-    expect(wrapper.find('.action-buttons .red').text()).to.equal('timeline');
-
-    wrapper.find('.action-buttons button').trigger('click');
-    expect(wrapper.emitted()).to.eql({ 'click-action': [['a']] });
-  });
-
   it('right side panel', () => {
     const wrapper = mount(SidePanel, {
       propsData: {

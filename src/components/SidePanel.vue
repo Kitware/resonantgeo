@@ -24,24 +24,10 @@ v-navigation-drawer.drawer-with-action-buttons(
         icon
       )
         v-icon {{ toolbar.icon }}
-  slot(name='actions')
-    v-container.action-buttons.pa-0(
-      v-if='actions'
-      :style='actionButtonsStyle'
-    )
-      v-card(
-        v-for='action in actions',
-        :key='action.name',
-        height='50px'
-      )
-        v-btn.action-button.ma-0(
-          dark,
-          depressed,
-          :color='action.color || "primary"',
-          @click='$emit("click-action", action.name)'
-        )
-          v-icon {{ action.icon }}
-
+  v-container.action-buttons.pa-0(
+    :style='actionButtonsStyle'
+  )
+    slot(name='actions')
   slot
   v-footer.footer(
     v-if='footer',
@@ -61,12 +47,6 @@ v-navigation-drawer.drawer-with-action-buttons(
   position fixed
   top 64px
   width 50px
-
-  .action-button
-    min-width unset
-    width 100%
-    height 100%
-    border-radius 0
 
 .footer
   height unset
@@ -113,10 +93,6 @@ export default {
     },
     footer: {
       type: Boolean,
-      default: false,
-    },
-    actions: {
-      type: [Array, Boolean],
       default: false,
     },
     toolbar: {
