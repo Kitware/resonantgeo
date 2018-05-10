@@ -69,6 +69,10 @@ export default {
         route: '/map',
         icon: 'zoom_out_map',
       }, {
+        title: 'Heatmap',
+        route: '/heatmap',
+        icon: 'grain',
+      }, {
         title: 'Image',
         route: '/image',
         icon: 'camera_alt',
