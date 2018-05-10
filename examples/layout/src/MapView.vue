@@ -24,8 +24,7 @@ full-screen-viewport
     :expanded='panel.expanded',
     :footer='true',
     :actions='panel.actions',
-    @click-toolbar='infoToolbar.open = !infoToolbar.open',
-    @click-action='drawing = $event'
+    @click-toolbar='infoToolbar.open = !infoToolbar.open'
   )
     v-card(
       v-for='annotation in annotations',
@@ -36,6 +35,13 @@ full-screen-viewport
         v-spacer
         v-btn(icon, @click='clickDelete(annotation)')
           v-icon delete
+    template(slot='actions')
+      side-panel-action(
+        v-for='action in panel.actions',
+        :key='action.name'
+        @click.stop='drawing = action.name'
+      )
+        v-icon {{ action.icon }}
     template(slot='footer')
       span {{ this.annotations.length }} annotations
       v-spacer
