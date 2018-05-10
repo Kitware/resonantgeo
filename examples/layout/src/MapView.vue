@@ -23,7 +23,6 @@ full-screen-viewport
     :toolbar='panel.toolbar',
     :expanded='panel.expanded',
     :footer='true',
-    :actions='panel.actions',
     @click-toolbar='infoToolbar.open = !infoToolbar.open'
   )
     v-card(
