@@ -10,6 +10,13 @@ full-screen-viewport
       :attribution='attribution',
       :opacity='opacity'
     )
+    geojs-annotation-layer(
+      :drawing.sync='drawing',
+      :editing.sync='editing',
+      :editable='true',
+      :annotations.sync='annotations',
+      :initialGeojson='geojson'
+    )
 
   side-panel(
     :top='64',
@@ -18,19 +25,19 @@ full-screen-viewport
     :footer='true',
     :actions='panel.actions',
     @click-toolbar='infoToolbar.open = !infoToolbar.open',
-    @click-action='clickAction'
+    @click-action='drawing = $event'
   )
-    v-expansion-panel
-      v-expansion-panel-content(
-        v-for='itemNumber in panel.items',
-        :key='`item-${itemNumber}`'
-      )
-        div(slot='header') Item {{ itemNumber }}
-        v-card
-          v-card-text.text-xs-center
-            | Expansion panel content for item {{ itemNumber }}
+    v-card(
+      v-for='annotation in annotations',
+      :key='annotation.id()',
+    )
+      v-card-title.py-0
+        span {{ annotation.name() }}
+        v-spacer
+        v-btn(icon, @click='clickDelete(annotation)')
+          v-icon delete
     template(slot='footer')
-      span Side panel footer
+      span {{ this.annotations.length }} annotations
       v-spacer
       v-icon(
         @click='clearItems'
@@ -71,6 +78,9 @@ export default {
   name: 'MapView',
   data() {
     return {
+      annotations: [],
+      drawing: false,
+      editing: false,
       baseLayer: true,
       opacity: 1,
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -80,17 +90,22 @@ export default {
         zoom: 4,
       },
       panel: {
-        items: 2,
         toolbar: {
           title: 'Side panel',
           icon: 'info',
         },
         actions: [{
-          name: 'add',
-          icon: 'add_circle',
+          name: 'point',
+          icon: 'adjust',
         }, {
-          name: 'delete',
-          icon: 'remove_circle',
+          name: 'rectangle',
+          icon: 'aspect_ratio',
+        }, {
+          name: 'line',
+          icon: 'timeline',
+        }, {
+          name: 'polygon',
+          icon: 'label_outline',
         }],
         expanded: true,
       },
@@ -100,18 +115,27 @@ export default {
         icon: 'close',
       },
       clicked: null,
+      geojson: {
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [-73.7569, 42.8495],
+          },
+        }],
+      },
     };
   },
   methods: {
     clickAction(name) {
-      if (name === 'add') {
-        this.panel.items += 1;
-      } else if (name === 'delete') {
-        this.panel.items = Math.max(0, this.panel.items - 1);
-      }
+      this.drawing = name;
     },
     clearItems() {
-      this.panel.items = 0;
+      this.annotations = [];
+    },
+    clickDelete(annotation) {
+      this.annotations = this.annotations.filter(a => a.id() !== annotation.id());
     },
   },
 };

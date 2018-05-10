@@ -1,9 +1,7 @@
 comment: false
 coverage:
   status:
-    default:
-      threshold: 1
-    patch:
+    patch: false
+    project:
       default:
-        threshold: 25
-        only_pulls: true
+        threshold: 5
