@@ -7,13 +7,16 @@ import constant from 'lodash-es/constant';
 import identity from 'lodash-es/identity';
 import isFinite from 'lodash-es/isFinite';
 import isString from 'lodash-es/isString';
+
 import bindWatchers from './bindWatchers';
+import { layerMixin } from './mixins';
 
 function intensityValidator(value) {
   return value === null || isFinite(value);
 }
 
 export default {
+  mixins: [layerMixin],
   props: {
     data: {
       type: Array,
@@ -71,15 +74,7 @@ export default {
     },
   },
   mounted() {
-    // This is in place purely for testing because there is no way
-    // in @vue/test-utils to put mocks in place *before* mount is called.
-    //   https://github.com/vuejs/vue-test-utils/issues/560
-    this.$parent = this.$parent || this.$options.testParent;
-
-    if (!this.$parent || !this.$parent.$geojsMap) {
-      throw new Error('Heatmap layer must be a child of a GeojsMapViewport');
-    }
-    this.$geojsLayer = this.$parent.$geojsMap.createLayer('feature', {
+    this.$geojsLayer = this.$geojsMap.createLayer('feature', {
       opacity: this.opacity,
       features: ['heatmap'],
     });
@@ -101,11 +96,6 @@ export default {
     bindWatchers(this, this.$geojsFeature, [
       'intensity', 'position', 'maxIntensity', 'minIntensity', 'updateDelay', 'binned',
     ]);
-  },
-  beforeDestroy() {
-    this.$parent.$geojsMap.deleteLayer(this.$geojsLayer);
-    delete this.$geojsLayer;
-    delete this.$geojsFeature;
   },
 };
 </script>

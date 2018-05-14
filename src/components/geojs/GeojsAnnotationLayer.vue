@@ -8,10 +8,13 @@ import forEach from 'lodash-es/forEach';
 import indexOf from 'lodash-es/indexOf';
 import differenceBy from 'lodash-es/differenceBy';
 
+import { layerMixin } from './mixins';
+
 const annotationTypes = ['line', 'point', 'polygon', 'rectangle', 'edit'];
 const stateEvents = ['add', 'update', 'remove'];
 
 export default {
+  mixins: [layerMixin],
   props: {
     labels: {
       type: Boolean,
@@ -81,16 +84,7 @@ export default {
     },
   },
   mounted() {
-    // This is in place purely for testing because there is no way
-    // in @vue/test-utils to put mocks in place *before* mount is called.
-    //   https://github.com/vuejs/vue-test-utils/issues/560
-    this.$parent = this.$parent || this.$options.testParent;
-
-    if (!this.$parent || !this.$parent.$geojsMap) {
-      throw new Error('Annotation layer must be a child of a GeojsMapViewport');
-    }
-    this.$geojs = this.$parent.$geojs;
-    this.$geojsLayer = this.$parent.$geojsMap.createLayer(
+    this.$geojsLayer = this.$geojsMap.createLayer(
       'annotation', {
         showLabels: this.labels,
         clickToEdit: this.editable,

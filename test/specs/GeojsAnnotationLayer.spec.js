@@ -209,15 +209,4 @@ describe('GeojsAnnotationLayer.vue', () => {
     wrapper.vm.annotations = [point];
     expect(wrapper.vm.state).to.eql([point]);
   });
-
-  it('mounted without the correct parent', () => {
-    // errors thrown in vue are printed to the console in non-production mode
-    sinon.stub(console, 'error');
-    const func = () => {
-      mount(GeojsAnnotationLayer);
-    };
-
-    expect(func).to.throw(/Annotation layer must be a child of a GeojsMapViewport/);
-    console.error.restore(); // eslint-disable-line no-console
-  });
 });

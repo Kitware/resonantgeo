@@ -4,8 +4,10 @@
 
 <script>
 import bindWatchers from './bindWatchers';
+import { layerMixin } from './mixins';
 
 export default {
+  mixins: [layerMixin],
   props: {
     url: {
       type: [String, Function],
@@ -28,15 +30,7 @@ export default {
     },
   },
   mounted() {
-    // This is in place purely for testing because there is no way
-    // in @vue/test-utils to put mocks in place *before* mount is called.
-    //   https://github.com/vuejs/vue-test-utils/issues/560
-    this.$parent = this.$parent || this.$options.testParent;
-
-    if (!this.$parent || !this.$parent.$geojsMap) {
-      throw new Error('Tile layer must be a child of a GeojsMapViewport');
-    }
-    this.$geojsLayer = this.$parent.$geojsMap.createLayer(
+    this.$geojsLayer = this.$geojsMap.createLayer(
       'osm', {
         url: this.url,
         attribution: this.attribution,
@@ -46,10 +40,6 @@ export default {
     bindWatchers(this, this.$geojsLayer, [
       'url', 'attribution', 'opacity',
     ]);
-  },
-  beforeDestroy() {
-    this.$parent.$geojsMap.deleteLayer(this.$geojsLayer);
-    delete this.$geojsLayer;
   },
 };
 </script>
