@@ -36,6 +36,7 @@ export default {
     };
   },
   mounted() {
+    this.$geojsViewport = true;
     this.$geojs = geo;
     this.$geojsMap = geo.map({
       node: this.$el,

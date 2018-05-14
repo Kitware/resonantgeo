@@ -85,15 +85,4 @@ describe('GeojsTileLayer.vue', () => {
     spy.should.have.been.calledWith(layer);
     spy.restore();
   });
-
-  it('mounted without the correct parent', () => {
-    // errors thrown in vue are printed to the console in non-production mode
-    sinon.stub(console, 'error');
-    const func = () => {
-      mount(GeojsHeatmapLayer);
-    };
-
-    expect(func).to.throw(/Heatmap layer must be a child of a GeojsMapViewport/);
-    console.error.restore(); // eslint-disable-line no-console
-  });
 });
