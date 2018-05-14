@@ -10,12 +10,15 @@ full-screen-viewport
       :attribution='attribution',
       :opacity='opacity'
     )
+    geojs-geojson-layer(
+      :geojson='geojson',
+      :opacity='0.5'
+    )
     geojs-annotation-layer(
       :drawing.sync='drawing',
       :editing.sync='editing',
       :editable='true',
-      :annotations.sync='annotations',
-      :initialGeojson='geojson'
+      :annotations.sync='annotations'
     )
 
   side-panel(
