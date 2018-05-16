@@ -41,6 +41,17 @@ describe('GeojsTileLayer.vue', () => {
     expect(layer.features()[0].data()).to.eql([geojson]);
   });
 
+  it('mount with null', () => {
+    const geojson = null;
+    const wrapper = mountLayer({
+      propsData: { geojson },
+    });
+
+    const layer = wrapper.vm.$geojsLayer;
+    expect(layer.features()).to.eql([]);
+    expect(wrapper.vm.$features).to.eql([]);
+  });
+
   it('responds to data changes', () => {
     const geojson = {
       type: 'Feature',
@@ -58,5 +69,6 @@ describe('GeojsTileLayer.vue', () => {
     const layer = wrapper.vm.$geojsLayer;
     expect(layer.features().length).to.equal(1);
     expect(layer.features()[0].data()).to.eql([geojson]);
+    expect(wrapper.vm.$features.length).to.eql(1);
   });
 });

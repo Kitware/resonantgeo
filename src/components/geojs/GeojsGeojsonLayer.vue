@@ -9,8 +9,7 @@ import { layerMixin } from './mixins';
 export default {
   mixins: [layerMixin],
   props: {
-    geojson: {
-      type: [Object, Array],
+    geojson: { // eslint-disable-line vue/require-prop-types
       required: true,
     },
     opacity: {
@@ -39,11 +38,13 @@ export default {
   },
   methods: {
     draw() {
-      this.$geojsLayer.clear();
-      this.$geojsReader.read(this.geojson, (features) => {
-        this.$features = features;
-        this.$geojsLayer.draw();
-      });
+      this.$geojsLayer.clear().draw();
+      if (this.geojson) {
+        this.$geojsReader.read(this.geojson, (features) => {
+          this.$features = features;
+          this.$geojsLayer.draw();
+        });
+      }
     },
   },
 };
