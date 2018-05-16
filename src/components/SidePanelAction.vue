@@ -1,7 +1,6 @@
 <template lang="pug">
 v-card.action-card(height='50px')
   v-btn.action-button.ma-0(
-    dark,
     depressed,
     :color='color',
     :disabled='disabled',
