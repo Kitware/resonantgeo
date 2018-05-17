@@ -11,8 +11,9 @@ full-screen-viewport
       :opacity='opacity'
     )
     geojs-geojson-layer(
+      :featureStyle='featureStyle',
       :geojson='geojson',
-      :opacity='0.5'
+      :opacity='1'
     )
     geojs-annotation-layer(
       :drawing.sync='drawing',
@@ -132,6 +133,16 @@ export default {
             coordinates: [-73.7569, 42.8495],
           },
         }],
+      },
+      featureStyle: {
+        point: {
+          fillOpacity: 1,
+          fillColor: 'steelblue',
+          strokeColor: 'black',
+          strokeWidth: 5,
+          strokeOpacity: 0.5,
+          radius: 15,
+        },
       },
     };
   },

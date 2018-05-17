@@ -16,11 +16,27 @@ export default {
       type: Number,
       default: 1,
     },
+    featureStyle: {
+      type: Object,
+      default() {
+        return {
+          point: {},
+          line: {},
+          polygon: {},
+        };
+      },
+    },
   },
   watch: {
     geojson: {
       handler() {
-        this.draw();
+        this.updateData();
+      },
+      deep: true,
+    },
+    featureStyle: {
+      handler() {
+        this.updateStyle();
       },
       deep: true,
     },
@@ -34,17 +50,29 @@ export default {
     });
     this.$features = [];
     bindWatchers(this, this.$geojsLayer, ['opacity']);
-    this.draw();
+    this.updateData();
   },
   methods: {
     draw() {
+      this.$geojsLayer.draw();
+    },
+    updateData() {
       this.$geojsLayer.clear().draw();
       if (this.geojson) {
         this.$geojsReader.read(this.geojson, (features) => {
           this.$features = features;
-          this.$geojsLayer.draw();
+          this.updateStyle();
         });
       }
+    },
+    updateStyle() {
+      this.$features.forEach((feature) => {
+        const type = feature.featureType;
+        if (this.featureStyle[type]) {
+          feature.style(this.featureStyle[type]);
+        }
+      });
+      this.draw();
     },
   },
 };
