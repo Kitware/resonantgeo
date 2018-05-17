@@ -3,7 +3,6 @@ v-navigation-drawer.drawer-with-action-buttons(
   clipped,
   persistent,
   :disable-resize-watcher='true',
-  floating,
   absolute,
   :mobile-break-point='0',
   height='',
