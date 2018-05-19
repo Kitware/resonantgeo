@@ -21,6 +21,12 @@ full-screen-viewport
       :editable='true',
       :annotations.sync='annotations'
     )
+    geojs-widget-layer(
+      :position='widget.position',
+      :offset='widget.offset',
+      :size='widget.size'
+    )
+      v-btn(color='success') Clifton Park
 
   side-panel(
     :top='64',
@@ -143,6 +149,11 @@ export default {
           strokeOpacity: 0.5,
           radius: 15,
         },
+      },
+      widget: {
+        size: { width: 142.5, height: 48 },
+        position: { x: -73.7569, y: 42.8495 },
+        offset: { x: 0, y: -30 },
       },
     };
   },
