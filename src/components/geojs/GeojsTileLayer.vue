@@ -30,13 +30,12 @@ export default {
     },
   },
   mounted() {
-    this.$geojsLayer = this.$geojsMap.createLayer(
-      'osm', {
-        url: this.url,
-        attribution: this.attribution,
-        opacity: this.opacity,
-        wrapX: this.wrapX,
-      });
+    this.$geojsLayer = this.$geojsMap.createLayer('osm', {
+      url: this.url,
+      attribution: this.attribution,
+      opacity: this.opacity,
+      wrapX: this.wrapX,
+    });
     bindWatchers(this, this.$geojsLayer, [
       'url', 'attribution', 'opacity',
     ]);

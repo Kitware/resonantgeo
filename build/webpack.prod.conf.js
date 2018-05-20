@@ -10,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -93,9 +93,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         return (
           module.resource &&
           /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-            path.join(__dirname, '../node_modules'),
-          ) === 0
+          module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
         );
       },
     }),
@@ -129,19 +127,15 @@ const webpackConfig = merge(baseWebpackConfig, {
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin'); // eslint-disable-line
 
-  webpackConfig.plugins.push(
-    new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp(
-        `\\.(${
-        config.build.productionGzipExtensions.join('|')
-        })$`,
-      ),
-      threshold: 10240,
-      minRatio: 0.8,
-    }),
-  );
+  webpackConfig.plugins.push(new CompressionWebpackPlugin({
+    asset: '[path].gz[query]',
+    algorithm: 'gzip',
+    test: new RegExp(`\\.(${
+      config.build.productionGzipExtensions.join('|')
+    })$`),
+    threshold: 10240,
+    minRatio: 0.8,
+  }));
 }
 
 if (config.build.bundleAnalyzerReport) {

@@ -84,11 +84,10 @@ export default {
     },
   },
   mounted() {
-    this.$geojsLayer = this.$geojsMap.createLayer(
-      'annotation', {
-        showLabels: this.labels,
-        clickToEdit: this.editable,
-      });
+    this.$geojsLayer = this.$geojsMap.createLayer('annotation', {
+      showLabels: this.labels,
+      clickToEdit: this.editable,
+    });
     this.$geojsLayer.geojson(this.initialGeojson);
     this.state = this.$geojsLayer.annotations();
     this.$geojsLayer.geoOn(

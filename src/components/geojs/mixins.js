@@ -18,6 +18,4 @@ const layerMixin = {
   },
 };
 
-export {
-  layerMixin, // eslint-disable-line import/prefer-default-export
-};
+export { layerMixin }; // eslint-disable-line import/prefer-default-export
