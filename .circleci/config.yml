@@ -1,8 +1,8 @@
 version: 2
 jobs:
-  build:
+  test_all:
     docker:
-      - image: circleci/node:6.13.0-stretch-browsers
+      - image: circleci/node:8
     working_directory: ~/project
 
     steps:
@@ -26,3 +26,23 @@ jobs:
           paths:
             - node_modules
           key: web-dependencies-{{ checksum "yarn.lock" }}
+
+  release:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run: npm install
+      - run: npx semantic-release
+
+workflows:
+  version: 2
+  test_and_release:
+    jobs:
+      - test_all
+      - release:
+          requires:
+            - test_all
+          filters:
+            branches:
+              only: master
