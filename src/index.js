@@ -9,7 +9,7 @@ function recursiveInstall(Vue, module) {
   forOwn(module, (component, name) => {
     if (component && isFunction(component.render)) {
       Vue.component(name, component);
-    } else if (component && component.__esModule) {  // eslint-disable-line no-underscore-dangle
+    } else if (component && component.__esModule) { // eslint-disable-line no-underscore-dangle
       recursiveInstall(Vue, component);
     }
   });

@@ -10,15 +10,11 @@ function mount(parent) {
 
 describe('Geojs layer mixin', () => {
   it('mount without a parent', () => {
-    expect(() => mount()).to.throw(
-      /A layer must be a child of a GeojsMapViewport/,
-    );
+    expect(() => mount()).to.throw(/A layer must be a child of a GeojsMapViewport/);
   });
 
   it('mount without a geojs viewport parent', () => {
-    expect(() => mount({})).to.throw(
-      /A layer must be a child of a GeojsMapViewport/,
-    );
+    expect(() => mount({})).to.throw(/A layer must be a child of a GeojsMapViewport/);
   });
 
   it('destroys on exit', () => {

@@ -17,12 +17,10 @@ describe('GeojsAnnotationLayer.vue', () => {
   }
 
   function interact(event, pt, button) {
-    interactor.simulateEvent(
-      event, {
-        map: mapWrapper.vm.$geojsMap.gcsToDisplay(pt),
-        button,
-      },
-    );
+    interactor.simulateEvent(event, {
+      map: mapWrapper.vm.$geojsMap.gcsToDisplay(pt),
+      button,
+    });
   }
 
   function click(pt) {
@@ -55,12 +53,12 @@ describe('GeojsAnnotationLayer.vue', () => {
   });
 
   it('annotation type validation', () => {
-    const drawing = mountAnnotationLayer().vm.$options.props.drawing;
+    const { drawing } = mountAnnotationLayer().vm.$options.props;
     expect(drawing.validator('not valid')).to.equal(false);
   });
 
   it('annotation editing validation', () => {
-    const editing = mountAnnotationLayer().vm.$options.props.editing;
+    const { editing } = mountAnnotationLayer().vm.$options.props;
     expect(editing.validator(-1)).to.equal(false);
   });
 
