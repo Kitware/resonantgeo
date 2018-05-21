@@ -1,108 +1,79 @@
-# resonantgeo
+# ResonantGeo Geospatial Vue components for [Resonant](http://resonant.kitware.com/)
 
-## Quick Start Instructions
+[![CircleCI](https://img.shields.io/circleci/project/github/Kitware/resonantgeo.svg)](https://circleci.com/gh/Kitware/resonantgeo)
+[![Codecov](https://img.shields.io/codecov/c/github/Kitware/resonantgeo.svg)](https://codecov.io/gh/Kitware/resonantgeo)
+[![Dependencies Status](https://david-dm.org/kitware/resonantgeo/status.svg)](https://david-dm.org/kitware/resonantgeo)
 
-First, you will need a recent version of `docker`
-[community](https://www.docker.com/community-edition) or
-[enterprise](https://www.docker.com/enterprise-edition) edition.  (the
-`docker.io` package from Ubuntu is too old).  You will also need a recent
-version of [`docker-compose`](https://docs.docker.com/compose/install/) (the
-latest version from pip should work fine).
+ResonantGeo is a set of Vue components built on top of [Vuetify](https://vuetifyjs.com) for quickly
+prototyping geospatial applications.  Each component is self-contained and does not rely on any
+global state or server infrastructure.  Component inputs are props and outputs are events.  For
+props requiring [two-way data binding](https://vuejs.org/v2/guide/forms.html), the `.sync` modifier
+is supported following the Vue
+[documentation](https://vuejs.org/v2/guide/components-custom-events.html#sync-Modifier).  To
+summarize, these props emit `update:<prop name>` events to request that the parent component update
+the value rather than doing so directly.
 
-Below is an example of versions of `docker` client, `docker` server, and
-`docker-compose` that are known to work:
-
-```bash
-docker version && docker-compose version
+To include a component into an existing application, just install the npm package
 ```
+npm install resonantgeo
 ```
-Client:
- Version:	18.03.0-ce
- API version:	1.37
- Go version:	go1.9.4
- Git commit:	0520e24
- Built:	Wed Mar 21 23:06:22 2018
- OS/Arch:	darwin/amd64
- Experimental:	false
- Orchestrator:	swarm
+and register the plugin with Vue.
+```javascript
+import Resonantgeo from 'resonantgeo';
+import Vue from 'vue';
 
-Server:
- Engine:
-  Version:	18.03.0-ce
-  API version:	1.37 (minimum version 1.12)
-  Go version:	go1.9.4
-  Git commit:	0520e24
-  Built:	Wed Mar 21 23:14:32 2018
-  OS/Arch:	linux/amd64
-  Experimental:	true
-
-docker-compose version 1.20.1, build 5d8c71b
-docker-py version: 3.1.4
-CPython version: 3.6.4
-OpenSSL version: OpenSSL 1.0.2n  7 Dec 2017
+Vue.use(Resonantgeo);
 ```
+ResonantGeo will then be ready to use in your applications components.
+```html
+<template>
+  <side-panel :expanded.sync="expanded">
+  </side-panel>
+</template>
 
-Once you have the right versions of the Docker tools, clone this repo and spin
-up the prepared development environment.
-
-```bash
-git clone git://github.com/kitware/resonantgeo
-cd resonantgeo
-git submodule update --init --recursive
-cd devops/docker
-
-# build options - edit to taste
-export MAKE_PARALLELISM="-j1" # default: -j4
-
-# runtime options
-export GIRDER_WORKER_CONCURRENCY="1"   # default: 4
-export GIRDER_ADMIN_NAME="myadminname" # default: admin
-export GIRDER_ADMIN_PASS="myadminpass" # default: nimdaredrig
-export GIRDER_USER_NAME="myusername"   # default: girder
-export GIRDER_USER_PASS="myuserpass"   # default: redrig
-export GIRDER_PORT="10080"             # default: 8080
-
-docker-compose up -d # will build images if necessary
-docker-compose logs -f provision
+<script>
+export default {
+  data() {
+    return {
+      expanded: true,
+    };
+  }
+};
+</script>
 ```
 
-The last command will show the progress of the `provision` service, which is a
-service that runs after the web server and database come up.  The `provision`
-service provisions the web server using a post-install routine, and then exits
-cleanly.  You can tell when the routine is complete by observing a log entry
-resembling the one below:
 
+Getting started from Vue cli
+============================
+
+To start a new project from scratch, you can use one of the
+[Vue cli](https://vuejs.org/v2/guide/installation.html#CLI) templates to initialize a new application
+using the same development environment used by the library itself.  Two templates exist,
+[jbeezley/resonantgeo-webpack-simple](https://github.com/jbeezley/resonantgeo-webpack-simple) is a
+basic example of an application with no testing and a simple webpack configuration, while
+[jbeezley/resonantgeo-webpack](https://github.com/jbeezley/resonantgeo-webpack) is a full featured
+example with unit and end-to-end testing and a webpack configuration suitable for production builds.
+
+To get started, just invoke the vue cli as follows
 ```
-provision_1  |
-provision_1  | Done.
-provision_1  | PROVISION COMPLETE
-resonantgeo_provision_1 exited with code 0
-```
-
-You will also notice that the container is listed as no longer running.
-(`docker-compose ps`).
-
-At this time, you should be able to point your browser to the host running the
-docker stack and the port designated for the web server
-(e.g.: `localhost:10080`).  You should be greated with the Minerva UI.
-
-## Making Changes
-
-For now, changes you make to the source code under `modules` or to the
-Dockerfile under `devops/docker/assets` are applied to the running environment
-by rebuilding the main docker image and recreating the corresponding containers.
-
-```bash
-# open your favorite text editor and make changes...
-
-docker-compose build # will rebuild the main docker image
-docker-compose up -d # will recreate the web, worker, and provision containers.
+npm install -g vue-cli
+vue init jbeezley/resonantgeo-webpack-simple
 ```
 
-Again, when the provisioner completes, you should be able to browse to your
-host's site and your changes should be reflected in the application.
+Examples
+========
 
-Coming soon: check back for updates that will accomodate live code editing
-features.  These updates will allow you to work on the code and have your
-changes automatically reflected in the application environment without having to
-rebuild images or recreate containers.
+There are example applications using ResonantGeo inside the [examples](examples) directory.
+Individual examples can be built and served locally by running `yarn && yarn dev` inside each
+subdirectory.
+
+Component documentation
+=======================
+
+Component documentation is in progress...
+
+Contributing
+============
+
+See [CONTRIBUTING.md](Contributing.md) for instructions on how to develop and contribute to
+ResonantGeo.
