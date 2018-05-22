@@ -2,9 +2,12 @@
 
 ## Quick Start Instructions
 
-First, you will need a recent version of `docker` (the `docker.io` package from
-Ubuntu is too old).  You will also need a recent version of `docker-compose`
-(the default version from pip should be fine).
+First, you will need a recent version of `docker`
+[community](https://www.docker.com/community-edition) or
+[enterprise](https://www.docker.com/enterprise-edition) edition.  (the
+`docker.io` package from Ubuntu is too old).  You will also need a recent
+version of [`docker-compose`](https://docs.docker.com/compose/install/) (the
+latest version from pip should work fine).
 
 Below is an example of versions of `docker` client, `docker` server, and
 `docker-compose` that are known to work:
