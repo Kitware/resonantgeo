@@ -10,7 +10,7 @@
 </style>
 
 <script>
-import { layerMixin } from './mixins';
+import layerMixin from '../../mixins/geojsLayer';
 
 export default {
   mixins: [layerMixin],

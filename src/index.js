@@ -3,13 +3,15 @@ import isFunction from 'lodash-es/isFunction';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 
+import bindWatchers from './bindWatchers';
+import * as mixins from './mixins';
 import * as components from './components';
 
 function recursiveInstall(Vue, module) {
   forOwn(module, (component, name) => {
     if (component && isFunction(component.render)) {
       Vue.component(name, component);
-    } else if (component && component.__esModule) { // eslint-disable-line no-underscore-dangle
+    } else {
       recursiveInstall(Vue, component);
     }
   });
@@ -24,4 +26,8 @@ export default {
   install,
 };
 
-export { components };
+export {
+  bindWatchers,
+  components,
+  mixins,
+};

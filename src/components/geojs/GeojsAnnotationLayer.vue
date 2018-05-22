@@ -8,7 +8,7 @@ import forEach from 'lodash-es/forEach';
 import indexOf from 'lodash-es/indexOf';
 import differenceBy from 'lodash-es/differenceBy';
 
-import { layerMixin } from './mixins';
+import layerMixin from '../../mixins/geojsLayer';
 
 const annotationTypes = ['line', 'point', 'polygon', 'rectangle', 'edit'];
 const stateEvents = ['add', 'update', 'remove'];

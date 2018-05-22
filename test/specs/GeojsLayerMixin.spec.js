@@ -1,4 +1,4 @@
-import { layerMixin } from '@/components/geojs/mixins';
+import layerMixin from '@/mixins/geojsLayer';
 
 function mount(parent) {
   const context = {
