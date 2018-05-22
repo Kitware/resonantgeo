@@ -8,8 +8,8 @@ import identity from 'lodash-es/identity';
 import isFinite from 'lodash-es/isFinite';
 import isString from 'lodash-es/isString';
 
-import bindWatchers from './bindWatchers';
-import { layerMixin } from './mixins';
+import bindWatchers from '../../bindWatchers';
+import layerMixin from '../../mixins/geojsLayer';
 
 function intensityValidator(value) {
   return value === null || isFinite(value);

@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import bindWatchers from './bindWatchers';
-import { layerMixin } from './mixins';
+import bindWatchers from '../../bindWatchers';
+import layerMixin from '../../mixins/geojsLayer';
 
 export default {
   mixins: [layerMixin],
