@@ -84,7 +84,7 @@ export default {
     },
   },
   mounted() {
-    this.$geojsLayer = this.$geojsMap.createLayer('annotation', {
+    this.createLayer('annotation', {
       showLabels: this.labels,
       clickToEdit: this.editable,
     });

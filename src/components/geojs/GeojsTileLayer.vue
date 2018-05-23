@@ -17,28 +17,18 @@ export default {
       type: String,
       default: '',
     },
-    opacity: {
-      type: Number,
-      default: 1,
-      validator(value) {
-        return value <= 1 && value >= 0;
-      },
-    },
     wrapX: {
       type: Boolean,
       default: true,
     },
   },
   mounted() {
-    this.$geojsLayer = this.$geojsMap.createLayer('osm', {
+    this.createLayer('osm', {
       url: this.url,
       attribution: this.attribution,
-      opacity: this.opacity,
       wrapX: this.wrapX,
     });
-    bindWatchers(this, this.$geojsLayer, [
-      'url', 'attribution', 'opacity',
-    ]);
+    bindWatchers(this, this.$geojsLayer, ['url', 'attribution']);
   },
 };
 </script>

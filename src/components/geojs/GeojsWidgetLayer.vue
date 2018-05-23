@@ -61,7 +61,7 @@ export default {
     },
   },
   mounted() {
-    this.$geojsLayer = this.$geojsMap.createLayer('feature', {
+    this.createLayer('feature', {
       renderer: null,
     });
     this.$geojsLayer.canvas().css({ overflow: 'hidden' });
