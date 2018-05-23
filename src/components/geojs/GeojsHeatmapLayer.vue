@@ -22,10 +22,6 @@ export default {
       type: Array,
       required: true,
     },
-    opacity: {
-      type: Number,
-      default: 1,
-    },
     intensity: {
       type: Function,
       default: constant(1),
@@ -74,11 +70,9 @@ export default {
     },
   },
   mounted() {
-    this.$geojsLayer = this.$geojsMap.createLayer('feature', {
-      opacity: this.opacity,
+    this.createLayer('feature', {
       features: ['heatmap'],
     });
-    bindWatchers(this, this.$geojsLayer, ['opacity']);
 
     this.$geojsFeature = this.$geojsLayer.createFeature('heatmap', {
       intensity: this.intensity,

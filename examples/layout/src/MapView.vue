@@ -8,23 +8,27 @@ full-screen-viewport
       v-if='baseLayer',
       :url='url',
       :attribution='attribution',
-      :opacity='opacity'
+      :opacity='opacity',
+      :zIndex='0'
     )
     geojs-geojson-layer(
       :featureStyle='featureStyle',
       :geojson='geojson',
-      :opacity='1'
+      :opacity='1',
+      :zIndex='1'
     )
     geojs-annotation-layer(
       :drawing.sync='drawing',
       :editing.sync='editing',
       :editable='true',
-      :annotations.sync='annotations'
+      :annotations.sync='annotations',
+      :zIndex='2'
     )
     geojs-widget-layer(
       :position='widget.position',
       :offset='widget.offset',
-      :size='widget.size'
+      :size='widget.size',
+      :zIndex='3'
     )
       v-btn(color='success') Clifton Park
 

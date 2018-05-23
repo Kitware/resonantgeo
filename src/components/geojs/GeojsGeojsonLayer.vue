@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import bindWatchers from '../../bindWatchers';
 import layerMixin from '../../mixins/geojsLayer';
 
 export default {
@@ -11,10 +10,6 @@ export default {
   props: {
     geojson: { // eslint-disable-line vue/require-prop-types
       required: true,
-    },
-    opacity: {
-      type: Number,
-      default: 1,
     },
     featureStyle: {
       type: Object,
@@ -42,14 +37,13 @@ export default {
     },
   },
   mounted() {
-    this.$geojsLayer = this.$geojsMap.createLayer('feature', {
+    this.createLayer('feature', {
       opacity: this.opacity,
     });
     this.$geojsReader = this.$geojs.jsonReader({
       layer: this.$geojsLayer,
     });
     this.$features = [];
-    bindWatchers(this, this.$geojsLayer, ['opacity']);
     this.updateData();
   },
   methods: {
