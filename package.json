@@ -19,7 +19,7 @@
     "geojs": "^0.16.0",
     "lodash-es": "^4.17.10",
     "vue": "^2.5.16",
-    "vuetify": "^1.0.18"
+    "vuetify": "1.0.14"
   },
   "devDependencies": {
     "@commitlint/cli": "^6.2.0",

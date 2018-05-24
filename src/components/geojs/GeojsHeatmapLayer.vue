@@ -62,11 +62,11 @@ export default {
     },
   },
   watch: {
-    data() {
-      this.$geojsFeature.data(this.data).draw();
-    },
-    layerStyle() {
-      this.$geojsFeature.style(this.layerStyle).draw();
+    layerStyle: {
+      handler() {
+        this.$geojsFeature.style(this.layerStyle).draw();
+      },
+      deep: true,
     },
   },
   mounted() {
@@ -81,14 +81,14 @@ export default {
       minIntensity: this.minIntensity,
       updateDelay: this.updateDelay,
       binned: this.binned,
-      style: this.style,
+      style: this.layerStyle,
     });
 
     if (this.data) {
       this.$geojsFeature.data(this.data).draw();
     }
     bindWatchers(this, this.$geojsFeature, [
-      'intensity', 'position', 'maxIntensity', 'minIntensity', 'updateDelay', 'binned',
+      'intensity', 'position', 'maxIntensity', 'minIntensity', 'updateDelay', 'binned', 'data',
     ]);
   },
 };
