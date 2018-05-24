@@ -7,6 +7,6 @@ export default function bindWatchers(vueComponent, geojsObject, props) {
     unwatch.set(prop, vueComponent.$watch(prop, (value) => {
       geojsObject[prop].call(geojsObject, value);
       geojsObject.draw();
-    }));
+    }, { deep: true }));
   });
 }

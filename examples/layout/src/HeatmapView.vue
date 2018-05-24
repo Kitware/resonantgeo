@@ -6,7 +6,8 @@ full-screen-viewport
   )
     geojs-tile-layer(
       :url='url',
-      :attribution='attribution'
+      :attribution='attribution',
+      :zIndex='0'
     )
     geojs-heatmap-layer(
       :data='data',
@@ -14,7 +15,8 @@ full-screen-viewport
       :binned='binned',
       :maxIntensity='maxIntensity',
       :minIntensity='minIntensity',
-      :updateDelay='updateDelay'
+      :updateDelay='updateDelay',
+      :zIndex='1'
     )
 
   side-panel(
