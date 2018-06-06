@@ -162,6 +162,7 @@ describe('GeojsAnnotationLayer.vue', () => {
   it('add an annotation via props', () => {
     const wrapper = mountAnnotationLayer();
     const point = geojs.annotation.annotation('point');
+    sinon.stub(point, 'features').returns([{}]);
 
     wrapper.vm.annotations = [point];
     expect(wrapper.vm.state).to.eql([point]);
@@ -203,8 +204,18 @@ describe('GeojsAnnotationLayer.vue', () => {
       },
     });
     const point = geojs.annotation.annotation('point');
+    sinon.stub(point, 'features').returns([{}]);
 
     wrapper.vm.annotations = [point];
     expect(wrapper.vm.state).to.eql([point]);
+  });
+
+  it('do not trigger state changes for empty annotations', () => {
+    const wrapper = mount(GeojsAnnotationLayer, {
+      testParent: mapWrapper.vm,
+    });
+    wrapper.setProps({ drawing: 'point' });
+    expect(wrapper.vm.$geojsLayer.mode()).to.equal('point');
+    expect(wrapper.vm.state).to.eql([]);
   });
 });
