@@ -4,6 +4,7 @@
 
 <script>
 import bind from 'lodash-es/bind';
+import filter from 'lodash-es/filter';
 import forEach from 'lodash-es/forEach';
 import indexOf from 'lodash-es/indexOf';
 import differenceBy from 'lodash-es/differenceBy';
@@ -71,10 +72,15 @@ export default {
       this.$emit('update:annotations', this.state);
     },
     annotations() {
-      const toRemove = differenceBy(
+      /*
+       * Geojs adds an annotation with no features when draw mode is triggered.
+       * We leave those annotations out of the local state and prevent the view
+       * from pruning them by filtering them out here.
+       */
+      const toRemove = filter(differenceBy(
         this.$geojsLayer.annotations(), this.annotations,
         annotation => annotation.id(),
-      );
+      ), annotation => annotation.features().length);
       const toAdd = differenceBy(
         this.annotations, this.$geojsLayer.annotations(),
         annotation => annotation.id(),
@@ -120,7 +126,10 @@ export default {
       }
     },
     resetAnnotationState() {
-      this.state = this.$geojsLayer.annotations();
+      this.state = filter(
+        this.$geojsLayer.annotations(),
+        annotation => annotation.features().length,
+      );
     },
   },
 };
