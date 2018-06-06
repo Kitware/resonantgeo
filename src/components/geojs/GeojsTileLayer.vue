@@ -21,12 +21,17 @@ export default {
       type: Boolean,
       default: true,
     },
+    keepLower: {
+      type: Boolean,
+      default: true,
+    },
   },
   mounted() {
     this.createLayer('osm', {
       url: this.url,
       attribution: this.attribution,
       wrapX: this.wrapX,
+      keepLower: this.keepLower,
     });
     bindWatchers(this, this.$geojsLayer, ['url', 'attribution']);
   },
