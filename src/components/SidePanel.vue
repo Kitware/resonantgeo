@@ -39,9 +39,10 @@ v-navigation-drawer.drawer-with-action-buttons(
 </template>
 
 <style lang="stylus" scoped>
-.navigation-drawer
+.drawer-with-action-buttons
   overflow visible
   z-index 100
+  padding-bottom 0
 
 .action-buttons
   position fixed
@@ -57,7 +58,6 @@ v-navigation-drawer.drawer-with-action-buttons(
     font-size 8pt
     background-color white
     width 100%
-    padding-right 0
 </style>
 
 <script>
