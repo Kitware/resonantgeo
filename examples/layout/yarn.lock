@@ -2798,7 +2798,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash-es@^4.17.8:
+lodash-es@^4.17.10:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.10.tgz#62cd7104cdf5dd87f235a837f0ede0e8e5117e05"
 
@@ -4195,12 +4195,12 @@ resolve@^1.1.6, resolve@^1.1.7, resolve@^1.4.0:
     path-parse "^1.0.5"
 
 "resonantgeo@file:../..":
-  version "1.0.0"
+  version "0.0.0-semantically-released"
   dependencies:
     geojs "^0.16.0"
-    lodash-es "^4.17.8"
-    vue "^2.5.2"
-    vuetify "^1.0.0"
+    lodash-es "^4.17.10"
+    vue "^2.5.16"
+    vuetify "1.0.14"
 
 ret@~0.1.10:
   version "0.1.15"
@@ -4930,13 +4930,13 @@ vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
 
-vue@^2.5.11, vue@^2.5.2:
+vue@^2.5.11, vue@^2.5.16:
   version "2.5.16"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
 
-vuetify@^1.0.0:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.0.17.tgz#646991024b327514b5fc50fb5c34e15451ad14b6"
+vuetify@1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.0.14.tgz#ab1f0e702383f66f9d320fd8e1cd2d63e7871e0b"
 
 watchpack@^1.4.0:
   version "1.6.0"
