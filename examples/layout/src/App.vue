@@ -10,41 +10,37 @@ v-app
   keep-alive
     router-view
 
-  // To be replaced by a login-dialog component
-  v-dialog(
-    max-width='500px',
+  dialog-container(
     v-model='loginDialog',
-    transition='fade-transition'
+    title='Login',
+    :error.sync='loginError'
   )
-    v-card
-      v-card-title Login
-      v-card-text
-        v-form(
-          v-model='login.valid',
-          ref='login',
-          lazy-validation
-        )
-          v-text-field(
-            v-model='login.email'
-            label='E-mail',
-            :rules='login.rules',
-            required
-          )
-          v-text-field(
-            v-model='login.password',
-            label='Password',
-            :rules='login.rules',
-            type='password',
-            required
-          )
-          v-btn(
-            @click.stop='loginDialog = false'
-          ) Cancel
-          v-btn(
-            color='primary',
-            @click.stop='submitLogin'
-          )
-            | Submit
+    v-form(
+      v-model='login.valid',
+      ref='login',
+      lazy-validation
+    )
+      v-text-field(
+        v-model='login.email'
+        label='E-mail',
+        :rules='login.rules',
+        required
+      )
+      v-text-field(
+        v-model='login.password',
+        label='Password',
+        :rules='login.rules',
+        type='password',
+        required
+      )
+      v-btn(
+        @click.stop='loginDialog = false'
+      ) Cancel
+      v-btn(
+        color='primary',
+        @click.stop='submitLogin'
+      )
+        | Submit
 </template>
 
 <style lang="stylus">
@@ -86,13 +82,13 @@ export default {
           v => !!v || 'Field is required',
         ],
       },
+      loginError: '',
     };
   },
   methods: {
     submitLogin() {
       if (this.$refs.login.validate()) {
-        console.log(`logged in as ${this.login.email}`); // eslint-disable-line no-console
-        this.loginDialog = false;
+        this.loginError = 'Sorry, this login form is not connected to a server';
       }
     },
   },
