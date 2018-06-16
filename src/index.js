@@ -17,9 +17,17 @@ function recursiveInstall(Vue, module) {
   });
 }
 
-function install(Vue) {
+function install(Vue, options = {}) {
+  const installComponents = Object.assign({}, components);
   Vue.use(Vuetify);
-  recursiveInstall(Vue, components);
+  if (options.girder) {
+    Object.defineProperty(Vue.prototype, '$girder', {
+      value: options.girder,
+    });
+  } else {
+    delete installComponents.girder;
+  }
+  recursiveInstall(Vue, installComponents);
 }
 
 export default {
