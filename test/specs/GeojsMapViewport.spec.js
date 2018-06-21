@@ -29,6 +29,13 @@ describe('GeojsMapViewport.vue', () => {
     expect(map.rotation()).closeTo(0.5, delta);
   });
 
+  it('provides properties to child elements', () => {
+    const wrapper = mount(GeojsMapViewport);
+    const provides = wrapper.vm.$options.provide();
+    expect(provides).to.have.property('$geojs');
+    expect(provides).to.have.property('$geojsMap');
+  });
+
   it('respond to pan events (sync)', () => {
     const wrapper = mount(GeojsMapViewport, {
       propsData: {

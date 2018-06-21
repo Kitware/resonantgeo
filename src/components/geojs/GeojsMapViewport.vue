@@ -35,6 +35,15 @@ export default {
       ready: false,
     };
   },
+  provide() {
+    const provided = {
+      $geojs: geo,
+    };
+    Object.defineProperty(provided, '$geojsMap', {
+      get: () => this.$geojsMap,
+    });
+    return provided;
+  },
   mounted() {
     this.$geojsViewport = true;
     this.$geojs = geo;

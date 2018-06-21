@@ -1,7 +1,7 @@
-import { mount } from '@vue/test-utils';
 
-import GeojsMapViewport from '@/components/geojs/GeojsMapViewport';
 import GeojsWidgetLayer from '@/components/geojs/GeojsWidgetLayer';
+
+import ProvideGeojs from '../ProvideGeojs';
 
 const TestComponent = {
   functional: true,
@@ -11,29 +11,26 @@ const TestComponent = {
 };
 
 describe('GeojsWidgetLayer.vue', () => {
+  const provider = new ProvideGeojs();
   let displayPosition = { x: 10, y: 20 };
-  let mapWrapper;
   let gcsToDisplay;
 
   function mountLayer(options = {}) {
-    return mount(GeojsWidgetLayer, {
-      testParent: mapWrapper.vm,
-      slots: {
-        default: TestComponent,
-      },
+    return provider.mountLayer(GeojsWidgetLayer, {
+      slots: { default: TestComponent },
       ...options,
     });
   }
 
   beforeEach(() => {
     sinon.stub(console, 'warn');
-    mapWrapper = mount(GeojsMapViewport);
-    gcsToDisplay = sinon.stub(mapWrapper.vm.$geojsMap, 'gcsToDisplay').callsFake(() => displayPosition);
+    provider.start();
+    gcsToDisplay = sinon.stub(provider.geojsMap, 'gcsToDisplay').callsFake(() => displayPosition);
   });
   afterEach(() => {
     console.warn.restore(); // eslint-disable-line no-console
     gcsToDisplay.restore();
-    mapWrapper.destroy();
+    provider.stop();
   });
 
   it('mounted with default slot', () => {

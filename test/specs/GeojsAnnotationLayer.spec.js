@@ -2,23 +2,21 @@ import geojs from 'geojs';
 import { mount } from '@vue/test-utils';
 import last from 'lodash-es/last';
 
-import GeojsMapViewport from '@/components/geojs/GeojsMapViewport';
 import GeojsAnnotationLayer from '@/components/geojs/GeojsAnnotationLayer';
 
+import ProvideGeojs from '../ProvideGeojs';
+
 describe('GeojsAnnotationLayer.vue', () => {
-  let mapWrapper;
+  const provider = new ProvideGeojs();
   let interactor;
+
   function mountAnnotationLayer(options = {}) {
-    const wrapper = mount(GeojsAnnotationLayer, {
-      testParent: mapWrapper.vm,
-      ...options,
-    });
-    return wrapper;
+    return provider.mountLayer(GeojsAnnotationLayer, options);
   }
 
   function interact(event, pt, button) {
     interactor.simulateEvent(event, {
-      map: mapWrapper.vm.$geojsMap.gcsToDisplay(pt),
+      map: provider.geojsMap.gcsToDisplay(pt),
       button,
     });
   }
@@ -42,13 +40,13 @@ describe('GeojsAnnotationLayer.vue', () => {
   beforeEach(() => {
     geojs.util.mockVGLRenderer();
     sinon.stub(console, 'warn');
-    mapWrapper = mount(GeojsMapViewport);
-    interactor = mapWrapper.vm.$geojsMap.interactor();
+    provider.start();
+    interactor = provider.geojsMap.interactor();
   });
 
   afterEach(() => {
     console.warn.restore(); // eslint-disable-line no-console
-    mapWrapper.destroy();
+    provider.stop();
     geojs.util.restoreVGLRenderer();
   });
 
@@ -87,9 +85,7 @@ describe('GeojsAnnotationLayer.vue', () => {
   });
 
   it('draw a point', () => {
-    const wrapper = mount(GeojsAnnotationLayer, {
-      testParent: mapWrapper.vm,
-    });
+    const wrapper = mount(GeojsAnnotationLayer, provider.mountOptions());
     wrapper.setProps({ drawing: 'point' });
     expect(wrapper.vm.$geojsLayer.mode()).to.equal('point');
 
@@ -211,9 +207,7 @@ describe('GeojsAnnotationLayer.vue', () => {
   });
 
   it('do not trigger state changes for empty annotations', () => {
-    const wrapper = mount(GeojsAnnotationLayer, {
-      testParent: mapWrapper.vm,
-    });
+    const wrapper = mount(GeojsAnnotationLayer, provider.mountOptions());
     wrapper.setProps({ drawing: 'point' });
     expect(wrapper.vm.$geojsLayer.mode()).to.equal('point');
     expect(wrapper.vm.state).to.eql([]);
