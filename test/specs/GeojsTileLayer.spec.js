@@ -1,25 +1,24 @@
-import { mount } from '@vue/test-utils';
-
-import GeojsMapViewport from '@/components/geojs/GeojsMapViewport';
 import GeojsTileLayer from '@/components/geojs/GeojsTileLayer';
 
+import ProvideGeojs from '../ProvideGeojs';
+
 describe('GeojsTileLayer.vue', () => {
-  let mapWrapper;
+  const provider = new ProvideGeojs();
+  function mountTileLayer(options) {
+    return provider.mountLayer(GeojsTileLayer, options);
+  }
   beforeEach(() => {
     sinon.stub(console, 'warn');
-    mapWrapper = mount(GeojsMapViewport);
+    provider.start();
   });
   afterEach(() => {
     console.warn.restore(); // eslint-disable-line no-console
-    mapWrapper.destroy();
+    provider.stop();
   });
 
   it('url (string)', () => {
-    const wrapper = mount(GeojsTileLayer, {
-      propsData: {
-        url: '/data/white.jpg',
-      },
-      testParent: mapWrapper.vm,
+    const wrapper = mountTileLayer({
+      propsData: { url: '/data/white.jpg' },
     });
     expect(wrapper.vm.$geojsLayer.url()).equal('/data/white.jpg');
 
@@ -29,12 +28,11 @@ describe('GeojsTileLayer.vue', () => {
 
   it('attribution', () => {
     const attribution = '<a href="www.example.com"></a>';
-    const wrapper = mount(GeojsTileLayer, {
+    const wrapper = mountTileLayer({
       propsData: {
         url: '/data/osm.png',
         attribution,
       },
-      testParent: mapWrapper.vm,
     });
     expect(wrapper.vm.$geojsLayer.attribution()).equal(attribution);
 
@@ -43,12 +41,11 @@ describe('GeojsTileLayer.vue', () => {
   });
 
   it('opacity', () => {
-    const wrapper = mount(GeojsTileLayer, {
+    const wrapper = mountTileLayer({
       propsData: {
         url: '/data/osm.png',
         opacity: 0.5,
       },
-      testParent: mapWrapper.vm,
     });
     expect(wrapper.vm.$geojsLayer.opacity()).equal(0.5);
 
@@ -57,24 +54,22 @@ describe('GeojsTileLayer.vue', () => {
   });
 
   it('wrapX', () => {
-    const wrapper = mount(GeojsTileLayer, {
+    const wrapper = mountTileLayer({
       propsData: {
         url: '/data/osm.png',
         wrapX: false,
       },
-      testParent: mapWrapper.vm,
     });
     expect(wrapper.vm.$geojsLayer.options.wrapX).equal(false);
   });
 
   it('removes on destroy', () => {
-    const wrapper = mount(GeojsTileLayer, {
+    const wrapper = mountTileLayer({
       propsData: {
         url: '/data/osm.png',
       },
-      testParent: mapWrapper.vm,
     });
-    const spy = sinon.spy(mapWrapper.vm.$geojsMap, 'deleteLayer');
+    const spy = sinon.spy(wrapper.vm.$geojsMap, 'deleteLayer');
     const layer = wrapper.vm.$geojsLayer;
     wrapper.destroy();
     spy.should.have.been.calledOnce;

@@ -1,26 +1,23 @@
 import geojs from 'geojs';
-import { mount } from '@vue/test-utils';
 
-import GeojsMapViewport from '@/components/geojs/GeojsMapViewport';
 import GeojsGeojsonLayer from '@/components/geojs/GeojsGeojsonLayer';
 
+import ProvideGeojs from '../ProvideGeojs';
+
 describe('GeojsTileLayer.vue', () => {
-  let mapWrapper;
+  const provider = new ProvideGeojs();
   function mountLayer(options = {}) {
-    return mount(GeojsGeojsonLayer, {
-      testParent: mapWrapper.vm,
-      ...options,
-    });
+    return provider.mountLayer(GeojsGeojsonLayer, options);
   }
 
   beforeEach(() => {
     geojs.util.mockVGLRenderer();
     sinon.stub(console, 'warn');
-    mapWrapper = mount(GeojsMapViewport);
+    provider.start();
   });
   afterEach(() => {
     console.warn.restore(); // eslint-disable-line no-console
-    mapWrapper.destroy();
+    provider.stop();
     geojs.util.restoreVGLRenderer();
   });
 

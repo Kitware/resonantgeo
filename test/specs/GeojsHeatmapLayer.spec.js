@@ -1,24 +1,20 @@
-import { mount } from '@vue/test-utils';
-
-import GeojsMapViewport from '@/components/geojs/GeojsMapViewport';
 import GeojsHeatmapLayer from '@/components/geojs/GeojsHeatmapLayer';
 
+import ProvideGeojs from '../ProvideGeojs';
+
 describe('GeojsTileLayer.vue', () => {
-  let mapWrapper;
+  const provider = new ProvideGeojs();
   function mountLayer(options = {}) {
-    return mount(GeojsHeatmapLayer, {
-      testParent: mapWrapper.vm,
-      ...options,
-    });
+    return provider.mountLayer(GeojsHeatmapLayer, options);
   }
 
   beforeEach(() => {
     sinon.stub(console, 'warn');
-    mapWrapper = mount(GeojsMapViewport);
+    provider.start();
   });
   afterEach(() => {
     console.warn.restore(); // eslint-disable-line no-console
-    mapWrapper.destroy();
+    provider.stop();
   });
 
   it('validate intensity (null)', () => {
@@ -78,7 +74,7 @@ describe('GeojsTileLayer.vue', () => {
 
   it('removes on destroy', () => {
     const wrapper = mountLayer();
-    const spy = sinon.spy(mapWrapper.vm.$geojsMap, 'deleteLayer');
+    const spy = sinon.spy(provider.geojsMap, 'deleteLayer');
     const layer = wrapper.vm.$geojsLayer;
     wrapper.destroy();
     spy.should.have.been.calledOnce;
