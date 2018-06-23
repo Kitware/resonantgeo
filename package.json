@@ -21,8 +21,11 @@
     "js-cookie": "^2.2.0",
     "lodash-es": "^4.17.10",
     "qs": "^6.5.2",
+    "vee-validate": "^2.1.0-beta.2",
     "vue": "^2.5.16",
-    "vuetify": "1.0.14"
+    "vue-async-computed": "^3.3.1",
+    "vue-avatar": "^2.1.5",
+    "vuetify": "1.0.19"
   },
   "devDependencies": {
     "@commitlint/cli": "^6.2.0",

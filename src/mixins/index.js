@@ -1,3 +1,9 @@
 import geojsLayer from './geojsLayer';
+import girderApi from './girderApi';
+import validation from './validation';
 
-export { geojsLayer }; // eslint-disable-line import/prefer-default-export
+export {
+  geojsLayer,
+  girderApi,
+  validation,
+};
