@@ -1,6 +1,6 @@
 import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import cookies from 'js-cookie';
+import MockAdapter from 'axios-mock-adapter';
 
 import { Session } from '@/rest';
 

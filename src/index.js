@@ -1,6 +1,8 @@
 import forOwn from 'lodash-es/forOwn';
 import isFunction from 'lodash-es/isFunction';
 import Vuetify from 'vuetify';
+import VeeValidate from 'vee-validate';
+import AsyncComputed from 'vue-async-computed';
 import 'vuetify/dist/vuetify.min.css';
 
 import bindWatchers from './bindWatchers';
@@ -20,6 +22,8 @@ function recursiveInstall(Vue, module) {
 function install(Vue, options = {}) {
   const installComponents = Object.assign({}, components);
   Vue.use(Vuetify);
+  Vue.use(VeeValidate, { delay: 300 });
+  Vue.use(AsyncComputed);
   if (options.girder) {
     Object.defineProperty(Vue.prototype, '$girder', {
       value: options.girder,

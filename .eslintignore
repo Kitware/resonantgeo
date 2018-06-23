@@ -4,4 +4,5 @@
 /*.js
 /test/coverage/
 /examples/*/build/**
+/examples/*/dist/**
 **/node_modules/**

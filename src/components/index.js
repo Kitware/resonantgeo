@@ -4,6 +4,7 @@ import FullScreenViewport from './FullScreenViewport';
 import SidePanel from './SidePanel';
 import SidePanelAction from './SidePanelAction';
 import * as geojs from './geojs';
+import * as girder from './girder';
 
 export {
   AppToolbar,
@@ -12,4 +13,5 @@ export {
   SidePanel,
   SidePanelAction,
   geojs,
+  girder,
 };
