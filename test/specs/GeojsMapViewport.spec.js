@@ -29,6 +29,42 @@ describe('GeojsMapViewport.vue', () => {
     expect(map.rotation()).closeTo(0.5, delta);
   });
 
+  it('zoomRange prop initialization', async () => {
+    const wrapper = mount(GeojsMapViewport, {
+      propsData: {
+        viewport: {
+          zoom: 1,
+        },
+        zoomRange: {
+          min: 5,
+          max: 7,
+        },
+        debounce: 0,
+      },
+    });
+    await wrapper.vm.$nextTick();
+    const map = wrapper.vm.$geojsMap;
+    expect(map.zoomRange()).to.include({ min: 5, max: 7 });
+    expect(wrapper.emitted('update:viewport').length).to.equal(1);
+  });
+
+  it('zoomRange prop reactivity', async () => {
+    const zoomRange = { min: 5, max: 12 };
+    const wrapper = mount(GeojsMapViewport, {
+      propsData: {
+        viewport: {
+          zoom: 1,
+        },
+        zoomRange,
+        debounce: 0,
+      },
+    });
+    await wrapper.vm.$nextTick();
+    const map = wrapper.vm.$geojsMap;
+    zoomRange.min = 7;
+    expect(map.zoomRange()).to.include({ min: 7, max: 12 });
+  });
+
   it('provides properties to child elements', () => {
     const wrapper = mount(GeojsMapViewport);
     const provides = wrapper.vm.$options.provide();

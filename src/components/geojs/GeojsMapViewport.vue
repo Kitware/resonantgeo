@@ -29,6 +29,12 @@ export default {
       type: Number,
       default: 100,
     },
+    zoomRange: {
+      type: Object,
+      default() {
+        return { min: 0, max: 16 };
+      },
+    },
   },
   data() {
     return {
@@ -43,6 +49,14 @@ export default {
       get: () => this.$geojsMap,
     });
     return provided;
+  },
+  watch: {
+    zoomRange: {
+      deep: true,
+      handler() {
+        this.$geojsMap.zoomRange(this.zoomRange);
+      },
+    },
   },
   mounted() {
     this.$geojsViewport = true;
@@ -65,6 +79,13 @@ export default {
       this.emitViewportEvents = debounce(this.emitViewportEventsSync, this.debounce);
     }
     this.ready = true;
+
+    // Setting the zoom range could modify the requested viewport.  Calling after
+    // the map is ready ensures that the `update:viewport` event is triggered to
+    // notify the parent.
+    this.$nextTick(() => {
+      this.$geojsMap.zoomRange(this.zoomRange);
+    });
   },
   beforeDestroy() {
     this.$geojsMap.exit();
