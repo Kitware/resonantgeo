@@ -11,6 +11,7 @@
 
 <script>
 import layerMixin from '../../mixins/geojsLayer';
+import { normalizePoint } from './utils';
 
 export default {
   mixins: [layerMixin],
@@ -24,16 +25,16 @@ export default {
     },
     // offset in pixels
     offset: {
-      type: Object,
+      type: [Object, Array],
       default() {
-        return { x: 0, y: 0 };
+        return [0, 0];
       },
     },
     // position of center in lat/lon
     position: {
-      type: Object,
+      type: [Object, Array],
       default() {
-        return { x: 0, y: 0 };
+        return [0, 0];
       },
     },
   },
@@ -44,11 +45,13 @@ export default {
   },
   computed: {
     cssPosition() {
+      const center = normalizePoint(this.center);
+      const offset = normalizePoint(this.offset);
       return {
         width: `${this.size.width}px`,
         height: `${this.size.height}px`,
-        left: `${(this.center.x + this.offset.x) - (this.size.width / 2)}px`,
-        top: `${(this.center.y + this.offset.y) - (this.size.height / 2)}px`,
+        left: `${(center.x + offset.x) - (this.size.width / 2)}px`,
+        top: `${(center.y + offset.y) - (this.size.height / 2)}px`,
       };
     },
   },
@@ -71,7 +74,7 @@ export default {
   },
   methods: {
     reposition() {
-      this.center = this.$geojsMap.gcsToDisplay(this.position);
+      this.center = this.$geojsMap.gcsToDisplay(normalizePoint(this.position));
       this.center.x += this.offset.x;
       this.center.y += this.offset.y;
     },

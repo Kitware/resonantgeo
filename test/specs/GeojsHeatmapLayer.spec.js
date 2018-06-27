@@ -58,6 +58,11 @@ describe('GeojsTileLayer.vue', () => {
     expect(wrapper.vm.$geojsFeature.data()).to.eql(data);
   });
 
+  it('wrapped position getter', () => {
+    const wrapper = mountLayer();
+    expect(wrapper.vm.wrappedPosition([1, 2])).to.eql({ x: 1, y: 2 });
+  });
+
   it('data reactivity', () => {
     const data = [{ x: 1, y: 2 }];
     const wrapper = mountLayer();
