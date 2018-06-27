@@ -41,7 +41,6 @@ v-navigation-drawer.drawer-with-action-buttons(
 <style lang="stylus" scoped>
 .drawer-with-action-buttons
   overflow visible
-  z-index 100
   padding-bottom 0
 
 .action-buttons
