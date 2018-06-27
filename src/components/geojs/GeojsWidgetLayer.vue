@@ -66,7 +66,7 @@ export default {
     });
     this.$geojsLayer.canvas().css({ overflow: 'hidden' });
     this.$geojsLayer.canvas().append(this.$el);
-    this.$geojsMap.geoOn(this.$geojs.event.pan, this.reposition);
+    this.$geojsLayer.geoOn(this.$geojs.event.pan, () => this.reposition());
     this.reposition();
   },
   methods: {

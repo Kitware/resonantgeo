@@ -99,4 +99,14 @@ describe('GeojsWidgetLayer.vue', () => {
     expect(wrapper.vm.cssPosition.left).to.equal(`${(displayPosition.x + 50) - (100 / 2)}px`);
     expect(wrapper.vm.cssPosition.top).to.equal(`${(displayPosition.y - 10) - (50 / 2)}px`);
   });
+  it('removes event handler on destroy', () => {
+    const wrapper = mountLayer();
+    const stub = sinon.stub(wrapper.vm, 'reposition');
+    provider.geojsMap.pan({ x: 100, y: 0 });
+    expect(stub.callCount).to.equal(1);
+    wrapper.vm.$destroy();
+
+    provider.geojsMap.pan({ x: -100, y: 0 });
+    expect(stub.callCount).to.equal(1);
+  });
 });
