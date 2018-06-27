@@ -11,7 +11,6 @@ full-screen-viewport
     )
     geojs-heatmap-layer(
       :data='data',
-      :position='position',
       :binned='binned',
       :maxIntensity='maxIntensity',
       :minIntensity='minIntensity',
@@ -79,12 +78,6 @@ export default {
         expanded: true,
       },
       data: [],
-      position(d) {
-        return {
-          x: d[2],
-          y: d[1],
-        };
-      },
       binOptions: [{
         text: 'auto',
         value: 'auto',
@@ -112,7 +105,7 @@ export default {
         rows.splice(0, 1);
         this.data = rows.map((r) => {
           const fields = r.split(',');
-          return [fields[12], fields[24], fields[25]].map(parseFloat);
+          return [fields[25], fields[24]].map(parseFloat);
         });
       });
   },

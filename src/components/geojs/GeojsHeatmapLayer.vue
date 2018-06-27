@@ -7,9 +7,11 @@ import constant from 'lodash-es/constant';
 import identity from 'lodash-es/identity';
 import isFinite from 'lodash-es/isFinite';
 import isString from 'lodash-es/isString';
+import compose from 'lodash-es/flowRight';
 
 import bindWatchers from '../../bindWatchers';
 import layerMixin from '../../mixins/geojsLayer';
+import { normalizePoint } from './utils';
 
 function intensityValidator(value) {
   return value === null || isFinite(value);
@@ -61,6 +63,11 @@ export default {
       },
     },
   },
+  computed: {
+    wrappedPosition() {
+      return compose([normalizePoint, this.position]);
+    },
+  },
   watch: {
     layerStyle: {
       handler() {
@@ -76,7 +83,7 @@ export default {
 
     this.$geojsFeature = this.$geojsLayer.createFeature('heatmap', {
       intensity: this.intensity,
-      position: this.position,
+      position: this.wrappedPosition,
       maxIntensity: this.maxIntensity,
       minIntensity: this.minIntensity,
       updateDelay: this.updateDelay,
@@ -88,8 +95,9 @@ export default {
       this.$geojsFeature.data(this.data).draw();
     }
     bindWatchers(this, this.$geojsFeature, [
-      'intensity', 'position', 'maxIntensity', 'minIntensity', 'updateDelay', 'binned', 'data',
+      'intensity', 'maxIntensity', 'minIntensity', 'updateDelay', 'binned', 'data',
     ]);
+    bindWatchers(this, this.$geojsFeature, { wrappedPosition: 'position' });
   },
 };
 </script>
