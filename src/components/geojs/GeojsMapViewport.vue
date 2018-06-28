@@ -1,5 +1,5 @@
 <template lang="pug">
-.geojs-map
+.geojs-map(v-resize='onResize')
   slot(v-if='ready')
 </template>
 
@@ -66,6 +66,7 @@ export default {
       zoom: this.zoom,
       center: this.viewport.center,
       rotation: this.viewport.rotation,
+      autoResize: false,
     });
     this.$geojsMap.geoOn(geo.event.pan, () => {
       this.emitViewportEvents();
@@ -98,6 +99,17 @@ export default {
         zoom: this.$geojsMap.zoom(),
         rotation: this.$geojsMap.rotation(),
       });
+    },
+    onResize() {
+      if (!this.$geojsMap) {
+        return;
+      }
+
+      const size = this.$el.getBoundingClientRect();
+      const mapSize = this.$geojsMap.size();
+      if (size.width !== mapSize.width || size.height !== mapSize.height) {
+        this.$geojsMap.size(size);
+      }
     },
   },
 };

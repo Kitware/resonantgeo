@@ -119,6 +119,29 @@ describe('GeojsMapViewport.vue', () => {
     expect(wrapper.emitted().click).eql([[[-15, 10]]]);
   });
 
+  it('respond to resize events', () => {
+    const wrapper = mount(GeojsMapViewport, { attachToDocument: true });
+    const spy = sinon.spy(wrapper.vm.$geojsMap, 'size');
+    wrapper.vm.$el.style.width = '200px';
+    wrapper.vm.$el.style.height = '100px';
+
+    // collect the baseline call count after setting the initial size
+    window.dispatchEvent(new Event('resize'));
+    let calls = spy.callCount;
+
+    // should only call once when keeping the size the same
+    window.dispatchEvent(new Event('resize'));
+    calls += 1;
+    spy.should.have.callCount(calls);
+
+    // should call twice with a new size
+    wrapper.vm.$el.style.width = '150px';
+    wrapper.vm.$el.style.height = '50px';
+    window.dispatchEvent(new Event('resize'));
+    calls += 2;
+    spy.should.have.callCount(calls);
+  });
+
   it('map exits on component destroy', () => {
     const wrapper = mount(GeojsMapViewport);
     const spy = sinon.spy(wrapper.vm.$geojsMap, 'exit');
