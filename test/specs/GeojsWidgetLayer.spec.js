@@ -38,21 +38,18 @@ describe('GeojsWidgetLayer.vue', () => {
     const layer = wrapper.vm.$geojsLayer;
     expect(layer.canvas().text()).to.equal('Test component');
   });
-
-  it('mounted with correct size', () => {
+  it('mounted with css transform', () => {
     const wrapper = mountLayer({
       propsData: {
-        size: { width: 300, height: 30 },
+        position: [10, 5],
       },
     });
-    expect(wrapper.find('.widget-content').element.style.width).to.equal('300px');
-    expect(wrapper.find('.widget-content').element.style.height).to.equal('30px');
+    expect(wrapper.vm.cssPosition.transform).to.equal('translateX(-50%) translateY(-50%)');
   });
   it('mounted with correct position', () => {
     const position = { x: 0, y: 0 };
     const wrapper = mountLayer({
       propsData: {
-        size: { width: 100, height: 50 },
         position,
         offset: [0, 0],
       },
@@ -60,14 +57,13 @@ describe('GeojsWidgetLayer.vue', () => {
 
     expect(gcsToDisplay).to.have.been.calledOnce;
     expect(gcsToDisplay).to.have.been.calledWith(position);
-    expect(wrapper.vm.cssPosition.left).to.equal(`${displayPosition.x - (100 / 2)}px`);
-    expect(wrapper.vm.cssPosition.top).to.equal(`${displayPosition.y - (50 / 2)}px`);
+    expect(wrapper.vm.cssPosition.left).to.equal(`${displayPosition.x}px`);
+    expect(wrapper.vm.cssPosition.top).to.equal(`${displayPosition.y}px`);
   });
   it('mounted with correct position and offset', () => {
     const position = { x: 0, y: 0 };
     const wrapper = mountLayer({
       propsData: {
-        size: { width: 100, height: 50 },
         position,
         offset: [50, -10],
       },
@@ -75,8 +71,8 @@ describe('GeojsWidgetLayer.vue', () => {
 
     expect(gcsToDisplay).to.have.been.calledOnce;
     expect(gcsToDisplay).to.have.been.calledWith(position);
-    expect(wrapper.vm.cssPosition.left).to.equal(`${(displayPosition.x + 50) - (100 / 2)}px`);
-    expect(wrapper.vm.cssPosition.top).to.equal(`${(displayPosition.y - 10) - (50 / 2)}px`);
+    expect(wrapper.vm.cssPosition.left).to.equal(`${displayPosition.x + 50}px`);
+    expect(wrapper.vm.cssPosition.top).to.equal(`${displayPosition.y - 10}px`);
   });
   it('mounted with a geojson position', () => {
     mountLayer({
@@ -92,7 +88,6 @@ describe('GeojsWidgetLayer.vue', () => {
     const position = { x: 0, y: 0 };
     const wrapper = mountLayer({
       propsData: {
-        size: { width: 100, height: 50 },
         position,
         offset: [50, -10],
       },
@@ -106,8 +101,8 @@ describe('GeojsWidgetLayer.vue', () => {
 
     expect(gcsToDisplay).to.have.been.calledTwice;
     expect(gcsToDisplay).to.have.been.calledWith(position);
-    expect(wrapper.vm.cssPosition.left).to.equal(`${(displayPosition.x + 50) - (100 / 2)}px`);
-    expect(wrapper.vm.cssPosition.top).to.equal(`${(displayPosition.y - 10) - (50 / 2)}px`);
+    expect(wrapper.vm.cssPosition.left).to.equal(`${displayPosition.x + 50}px`);
+    expect(wrapper.vm.cssPosition.top).to.equal(`${displayPosition.y - 10}px`);
   });
   it('removes event handler on destroy', () => {
     const wrapper = mountLayer();

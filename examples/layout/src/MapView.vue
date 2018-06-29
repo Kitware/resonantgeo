@@ -155,7 +155,6 @@ export default {
         },
       },
       widget: {
-        size: { width: 142.5, height: 48 },
         position: [-73.7569, 42.8495],
         offset: [0, -30],
       },
