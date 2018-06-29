@@ -12,6 +12,7 @@
 <script>
 import debounce from 'lodash-es/debounce';
 import geo from 'geojs';
+import { normalizePoint } from './utils';
 
 export default {
   props: {
@@ -39,6 +40,7 @@ export default {
   data() {
     return {
       ready: false,
+      skipNextViewportEvent: false,
     };
   },
   provide() {
@@ -55,6 +57,15 @@ export default {
       deep: true,
       handler() {
         this.$geojsMap.zoomRange(this.zoomRange);
+      },
+    },
+    viewport: {
+      deep: true,
+      handler() {
+        this.skipNextViewportEvent = true;
+        this.$geojsMap.center(normalizePoint(this.viewport.center));
+        this.$geojsMap.zoom(this.viewport.zoom);
+        this.$geojsMap.rotation(this.viewport.rotation);
       },
     },
   },
@@ -93,6 +104,10 @@ export default {
   },
   methods: {
     emitViewportEventsSync() {
+      if (this.skipNextViewportEvent) {
+        this.skipNextViewportEvent = false;
+        return;
+      }
       const center = this.$geojsMap.center();
       this.$emit('update:viewport', {
         center: [center.x, center.y],

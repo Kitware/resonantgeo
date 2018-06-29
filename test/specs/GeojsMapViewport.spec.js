@@ -65,6 +65,31 @@ describe('GeojsMapViewport.vue', () => {
     expect(map.zoomRange()).to.include({ min: 7, max: 12 });
   });
 
+  it('viewport zoom reactivity', () => {
+    const viewport = { zoom: 10 };
+    const wrapper = mount(GeojsMapViewport, {
+      propsData: {
+        debounce: 0,
+        viewport,
+      },
+    });
+    viewport.zoom = 11.5;
+    expect(wrapper.vm.$geojsMap.zoom()).to.equal(11.5);
+  });
+
+  it('viewport center reactivity', () => {
+    const viewport = { center: [0, 0] };
+    const wrapper = mount(GeojsMapViewport, {
+      propsData: {
+        debounce: 0,
+        viewport,
+      },
+    });
+    viewport.center = [10, 5];
+    expect(wrapper.vm.$geojsMap.center().x).to.be.closeTo(10, 1e-6);
+    expect(wrapper.vm.$geojsMap.center().y).to.be.closeTo(5, 1e-6);
+  });
+
   it('provides properties to child elements', () => {
     const wrapper = mount(GeojsMapViewport);
     const provides = wrapper.vm.$options.provide();
