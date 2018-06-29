@@ -54,7 +54,7 @@ describe('GeojsWidgetLayer.vue', () => {
       propsData: {
         size: { width: 100, height: 50 },
         position,
-        offset: { x: 0, y: 0 },
+        offset: [0, 0],
       },
     });
 
@@ -69,7 +69,7 @@ describe('GeojsWidgetLayer.vue', () => {
       propsData: {
         size: { width: 100, height: 50 },
         position,
-        offset: { x: 50, y: -10 },
+        offset: [50, -10],
       },
     });
 
@@ -94,7 +94,7 @@ describe('GeojsWidgetLayer.vue', () => {
       propsData: {
         size: { width: 100, height: 50 },
         position,
-        offset: { x: 50, y: -10 },
+        offset: [50, -10],
       },
     });
 

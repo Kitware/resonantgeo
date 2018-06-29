@@ -74,9 +74,10 @@ export default {
   },
   methods: {
     reposition() {
+      const offset = normalizePoint(this.offset);
       this.center = this.$geojsMap.gcsToDisplay(normalizePoint(this.position));
-      this.center.x += this.offset.x;
-      this.center.y += this.offset.y;
+      this.center.x += offset.x;
+      this.center.y += offset.y;
     },
   },
 };
