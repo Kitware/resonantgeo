@@ -60,6 +60,9 @@ module.exports = {
     hints: false,
   },
   devtool: '#eval-source-map',
+  plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+  ],
 };
 
 if (process.env.NODE_ENV === 'production') {

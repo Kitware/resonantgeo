@@ -1,0 +1,110 @@
+<template lang="pug">
+.job-list
+  v-layout(row)
+    v-flex(xs12)
+      girder-job-filter-form.mb-5(
+        :from-date.sync='jobFilter.fromDate',
+        :to-date.sync='jobFilter.toDate',
+        :status.sync='jobFilter.status',
+        :job-type.sync='jobFilter.jobType',
+        :status-list='typeAndStatusList.statuses',
+        :job-type-list='typeAndStatusList.types'
+      )
+  v-layout(row)
+    v-flex(xs12)
+      girder-job-table(
+        :jobs='jobs',
+        :pagination.sync='pagination',
+        :morePages='morePages'
+      )
+</template>
+
+<script>
+import { stringify } from 'qs';
+
+import { girderApi } from '../../mixins';
+
+export default {
+  mixins: [girderApi],
+  data() {
+    return {
+      jobFilter: {
+        fromDate: null,
+        toDate: null,
+        status: null,
+        jobType: null,
+      },
+      pagination: {
+        rowsPerPage: 10,
+        page: 1,
+        sortBy: 'updated',
+        descending: true,
+      },
+
+      morePages: true,
+    };
+  },
+  watch: {
+    // reset to the first page when the filter changes
+    jobFilter: {
+      handler() {
+        this.pagination.page = 1;
+      },
+      deep: true,
+    },
+  },
+  asyncComputed: {
+    jobs: {
+      async get() {
+        this.session.user; // reload when the user changes
+
+        const pg = this.pagination;
+        const params = {
+          limit: pg.rowsPerPage + 1, // get one more than the requested limit to detect next page
+          offset: pg.rowsPerPage * (pg.page - 1),
+        };
+
+        if (pg.sortBy) {
+          params.sort = pg.sortBy;
+          params.sortdir = pg.descending ? -1 : 1;
+        }
+
+        if (this.jobFilter.status !== null) {
+          params.statuses = JSON.stringify([this.jobFilter.status]);
+        }
+
+        if (this.jobFilter.jobType !== null) {
+          params.types = JSON.stringify([this.jobFilter.jobType]);
+        }
+
+        const resp = await this.session.get(`job?${stringify(params)}`);
+
+        // set the morePages prop on the data table and slice to real count
+        if (resp.data.length < params.limit) {
+          this.morePages = false;
+        } else {
+          this.morePages = true;
+        }
+        return resp.data.slice(0, pg.rowsPerPage);
+      },
+      default() {
+        return [];
+      },
+    },
+    typeAndStatusList: {
+      async get() {
+        this.session.user; // reload when the user changes
+
+        const resp = await this.session.get('job/typeandstatus');
+        return resp.data;
+      },
+      default() {
+        return {
+          statuses: [],
+          types: [],
+        };
+      },
+    },
+  },
+};
+</script>
