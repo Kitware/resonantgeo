@@ -9,9 +9,12 @@ v-app
         @user='logout'
       )
 
-  p.user-info.text-xs-center
-    span(v-if='$girder.user') You are logged in as #[b {{ $girder.user.login }}].
-    span(v-else) You are not logged in.
+  v-container.main
+    girder-job-list
+
+  // p.user-info.text-xs-center
+  //   span(v-if='$girder.user') You are logged in as #[b {{ $girder.user.login }}].
+  //   span(v-else) You are not logged in.
 
   girder-user-dialog(
     :form.sync='userForm',
@@ -19,15 +22,14 @@ v-app
   )
 </template>
 
-<style lang="stylus">
-html,body,.application,.application--wrap
-  height 100vh
-  overflow hidden
+<style lang="stylus" scoped>
+.user-info
+  position absolute
+  top 50%
+  width 100%
 
-  .user-info
-    position absolute
-    top 50%
-    width 100%
+.main
+  margin-top 65px
 </style>
 
 <script>

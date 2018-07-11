@@ -1,8 +1,10 @@
 import 'babel-polyfill';
+import AsyncComputed from 'vue-async-computed';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 
+Vue.use(AsyncComputed);
 Vue.use(Vuetify);
 
 // This is necessary to silence warnings about mutating props, which
