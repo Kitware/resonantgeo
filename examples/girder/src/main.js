@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import ResonantGeo from 'resonantgeo';
-import { Session } from 'resonantgeo/rest';
+import { Session } from 'resonantgeo/src/rest';
 
 import App from './App';
 
