@@ -23,8 +23,8 @@ describe('SidePanel.vue', () => {
         },
       },
     });
-    expect(wrapper.contains('.toolbar')).to.equal(true);
-    expect(wrapper.find('.toolbar').text()).to.equal('Toolbar title');
+    expect(wrapper.contains('.v-toolbar')).to.equal(true);
+    expect(wrapper.find('.v-toolbar').text()).to.equal('Toolbar title');
   });
 
   it('toolbar with icon', () => {
@@ -36,8 +36,8 @@ describe('SidePanel.vue', () => {
         },
       },
     });
-    expect(wrapper.contains('.toolbar')).to.equal(true);
-    expect(wrapper.find('.toolbar button').text()).to.equal('more_vert');
+    expect(wrapper.contains('.v-toolbar')).to.equal(true);
+    expect(wrapper.find('.v-toolbar button').text()).to.equal('more_vert');
   });
 
   it('right side panel', () => {
