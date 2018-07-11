@@ -13,6 +13,12 @@ jobs:
           name: Install web deps
           command: yarn
       - run:
+          name: Install girder example web deps
+          command: yarn --cwd examples/girder
+      - run:
+          name: Install layout example web deps
+          command: yarn --cwd examples/layout
+      - run:
           name: Run web tests
           command: yarn test
       - run:
@@ -25,6 +31,8 @@ jobs:
       - save_cache:
           paths:
             - node_modules
+            - examples/girder/node_modules
+            - examples/layout/node_modules
           key: web-dependencies-{{ checksum "yarn.lock" }}
 
   release:
