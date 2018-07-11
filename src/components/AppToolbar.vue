@@ -1,5 +1,5 @@
 <template lang="pug">
-v-toolbar(app, tabs)
+v-toolbar.resonantgeo-toolbar(app, tabs)
   slot(name='left')
     v-tabs.mx-0(
       v-if='tabs.length',
@@ -30,11 +30,17 @@ v-toolbar(app, tabs)
 </template>
 
 <style lang="stylus" scoped>
-.tabs
+.v-tabs
   width unset
 
   .tab
     min-width 100px
+</style>
+
+<style lang="stylus">
+.resonantgeo-toolbar
+  .v-toolbar__content
+    padding 0
 </style>
 
 <script>

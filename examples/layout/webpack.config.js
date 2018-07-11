@@ -41,7 +41,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue$: 'vue/dist/vue.esm.js',
+      vue$: require.resolve('vue/dist/vue.esm.js'),
     },
     extensions: ['*', '.js', '.vue', '.json'],
   },
@@ -54,6 +54,9 @@ module.exports = {
     hints: false,
   },
   devtool: '#eval-source-map',
+  plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+  ],
 };
 
 if (process.env.NODE_ENV === 'production') {
