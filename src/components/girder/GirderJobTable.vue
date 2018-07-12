@@ -12,7 +12,11 @@ v-card
       td {{ props.item.title }}
       td.one-line {{ props.item.type }}
       td.one-line {{ props.item.updateString }}
-      td.one-line {{ props.item.statusText }}
+      td.one-line
+        v-chip(small, :color='props.item.statusColor', :text-color='props.item.statusTextColor')
+          v-avatar(v-if='props.item.statusIcon')
+            v-icon {{ props.item.statusIcon }}
+          | {{ props.item.statusText }}
 
     template(slot='pageText', slot-scope='props')
       .v-datatable__actions__pagination {{ pageRange.first }}-{{ pageRange.last }}
@@ -77,6 +81,9 @@ export default {
       const statusDef = Object.assign({ text: 'Unknown' }, status.getByValue(job.status));
       return Object.assign({
         statusText: statusDef.text,
+        statusColor: statusDef.color,
+        statusTextColor: statusDef.textColor || 'white',
+        statusIcon: statusDef.icon,
         updateString: moment(job.updated).format('dddd, MMMM D, YYYY @ h:mm a'),
       }, job);
     },
