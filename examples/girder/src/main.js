@@ -1,11 +1,12 @@
+import 'babel-polyfill';
+
 import Vue from 'vue';
 import ResonantGeo from 'resonantgeo';
 import { Session } from 'resonantgeo/src/rest';
 
 import App from './App';
 
-const apiRoot = 'https://data.kitware.com/api/v1';
-
+const apiRoot = localStorage.getItem('apiRoot') || 'https://data.kitware.com/api/v1';
 const girder = new Session({ apiRoot });
 girder.$refresh().then(() => {
   Vue.use(ResonantGeo, {
