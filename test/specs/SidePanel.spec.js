@@ -56,4 +56,16 @@ describe('SidePanel.vue', () => {
     expect(nav.props()).property('right', true);
     expect(parseInt(wrapper.find('.action-buttons').element.style.left, 10)).lessThan(0);
   });
+
+  it('fixed position side panel', () => {
+    const wrapper = mount(SidePanel, {
+      propsData: {
+        floating: false,
+      },
+    });
+    expect(wrapper.vm.style).to.eql({});
+    expect(wrapper.element.style.height).to.equal('100%');
+    expect(wrapper.find({ name: 'v-navigation-drawer' }).vm.app).to.equal(true);
+    expect(wrapper.find({ name: 'v-navigation-drawer' }).vm.clipped).to.equal(false);
+  });
 });

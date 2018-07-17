@@ -33,6 +33,7 @@ full-screen-viewport
       v-btn(color='success') Clifton Park
 
   side-panel(
+    :floating='false',
     :top='64',
     :toolbar='panel.toolbar',
     :expanded='panel.expanded',

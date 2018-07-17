@@ -1,11 +1,11 @@
 <template lang="pug">
 v-navigation-drawer.drawer-with-action-buttons(
-  clipped,
+  :clipped='floating',
   persistent,
-  :disable-resize-watcher='true',
-  absolute,
+  :absolute='floating',
+  :app='!floating',
   :mobile-break-point='0',
-  height='',
+  :height='floating ? "" : "100%"',
   :style='style',
   v-model='expanded',
   :right='right',
@@ -13,7 +13,7 @@ v-navigation-drawer.drawer-with-action-buttons(
   slot(name='toolbar')
     v-toolbar(
       v-if='toolbar',
-      :flat='true'
+      flat
     )
       v-toolbar-title {{ toolbar.title }}
       v-spacer
@@ -98,16 +98,23 @@ export default {
       type: [Object, Boolean],
       default: false,
     },
+    floating: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     style() {
-      return {
-        marginTop: `${this.top}px`,
-        marginBottom: `${this.bottom}px`,
-        opacity: this.opacity,
-        top: `${this.margin}px`,
-        bottom: `${this.margin}px`,
-      };
+      if (this.floating) {
+        return {
+          marginTop: `${this.top}px`,
+          marginBottom: `${this.bottom}px`,
+          opacity: this.opacity,
+          top: `${this.margin}px`,
+          bottom: `${this.margin}px`,
+        };
+      }
+      return {};
     },
     actionButtonsStyle() {
       const side = this.right ? 'left' : 'right';
