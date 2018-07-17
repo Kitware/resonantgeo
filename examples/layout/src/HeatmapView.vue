@@ -19,6 +19,7 @@ full-screen-viewport
     )
 
   side-panel(
+    :floating='false',
     :top='64',
     :toolbar='panel.toolbar'
   )
