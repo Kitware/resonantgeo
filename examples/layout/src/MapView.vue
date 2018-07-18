@@ -66,7 +66,6 @@ full-screen-viewport
 
   side-panel(
     :expanded='infoToolbar.open',
-    :top='64',
     :right='true',
     :margin='200',
     :toolbar='infoToolbar',
@@ -97,6 +96,7 @@ full-screen-viewport
 export default {
   name: 'MapView',
   data() {
+    window.view = this;
     return {
       annotations: [],
       drawing: false,

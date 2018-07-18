@@ -61,10 +61,16 @@ describe('SidePanel.vue', () => {
     const wrapper = mount(SidePanel, {
       propsData: {
         floating: false,
+        top: 20,
+        opacity: 1,
       },
     });
-    expect(wrapper.vm.style).to.eql({});
-    expect(wrapper.element.style.height).to.equal('100%');
+    expect(wrapper.vm.style).to.eql({
+      opacity: 1,
+      marginTop: '20px',
+      marginBottom: '0px',
+    });
+    expect(wrapper.element.style.height).to.equal('calc(100% - 20px)');
     expect(wrapper.find({ name: 'v-navigation-drawer' }).vm.app).to.equal(true);
     expect(wrapper.find({ name: 'v-navigation-drawer' }).vm.clipped).to.equal(false);
   });
