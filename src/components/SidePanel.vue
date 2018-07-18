@@ -1,11 +1,11 @@
 <template lang="pug">
 v-navigation-drawer.drawer-with-action-buttons(
-  :clipped='floating',
   persistent,
-  :absolute='floating',
+  :height='height',
   :app='!floating',
+  :absolute='floating',
+  :fixed='!floating',
   :mobile-break-point='0',
-  :height='floating ? "" : "100%"',
   :style='style',
   v-model='expanded',
   :right='right',
@@ -105,16 +105,24 @@ export default {
   },
   computed: {
     style() {
+      const style = {
+        opacity: this.opacity,
+        marginTop: `${this.top}px`,
+        marginBottom: `${this.bottom}px`,
+      };
       if (this.floating) {
-        return {
-          marginTop: `${this.top}px`,
-          marginBottom: `${this.bottom}px`,
-          opacity: this.opacity,
+        Object.assign(style, {
           top: `${this.margin}px`,
           bottom: `${this.margin}px`,
-        };
+        });
       }
-      return {};
+      return style;
+    },
+    height() {
+      if (this.floating) {
+        return '';
+      }
+      return `calc(100% - ${this.top + this.bottom}px)`;
     },
     actionButtonsStyle() {
       const side = this.right ? 'left' : 'right';

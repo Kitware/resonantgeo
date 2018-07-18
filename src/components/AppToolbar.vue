@@ -1,5 +1,5 @@
 <template lang="pug">
-v-toolbar.resonantgeo-toolbar(app, tabs)
+v-toolbar.resonantgeo-toolbar(app, tabs, fixed, clipped-left)
   slot(name='left')
     v-tabs.mx-0(
       v-if='tabs.length',
@@ -30,6 +30,9 @@ v-toolbar.resonantgeo-toolbar(app, tabs)
 </template>
 
 <style lang="stylus" scoped>
+.resonantgeo-toolbar
+  z-index 4 // above the navigation drawer
+
 .v-tabs
   width unset
 
