@@ -4265,7 +4265,7 @@ resolve@^1.4.0:
     vue "^2.5.16"
     vue-async-computed "^3.3.1"
     vue-avatar "^2.1.5"
-    vuetify "1.1.6"
+    vuetify "^1.1.8"
 
 ret@~0.1.10:
   version "0.1.15"
@@ -5007,9 +5007,9 @@ vue@^2.5.11, vue@^2.5.16:
   version "2.5.16"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
 
-vuetify@1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.1.6.tgz#f949c2ee9b1addeb57d1026930be2951018054a1"
+vuetify@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.1.8.tgz#3aef842ddc9b7ec348e7ce273a24f2f8ebb1cea9"
 
 watchpack@^1.4.0:
   version "1.6.0"
