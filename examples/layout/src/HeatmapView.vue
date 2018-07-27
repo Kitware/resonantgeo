@@ -21,7 +21,8 @@ full-screen-viewport
   side-panel(
     :floating='false',
     :top='64',
-    :toolbar='panel.toolbar'
+    :toolbar='panel.toolbar',
+    :expanded='sidePanel'
   )
     v-card.pt-2(flat)
       v-card-text.py-0
@@ -63,6 +64,12 @@ full-screen-viewport
 <script>
 export default {
   name: 'HeatmapView',
+  props: {
+    sidePanel: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       url: 'http://tile.stamen.com/toner-lite/{z}/{x}/{y}.png',

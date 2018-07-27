@@ -3,12 +3,14 @@ v-app
   app-toolbar(
     :tabs='tabs',
     :title='title',
-    :userIcon='userIcon'
-    @click-user='loginDialog = true'
+    :userIcon='userIcon',
+    :panelButton='true',
+    @click-user='loginDialog = true',
+    @click-panel='sidePanel = !sidePanel'
   )
 
   keep-alive
-    router-view
+    router-view(:side-panel='sidePanel')
 
   dialog-container(
     v-model='loginDialog',
@@ -83,6 +85,7 @@ export default {
         ],
       },
       loginError: '',
+      sidePanel: true,
     };
   },
   methods: {

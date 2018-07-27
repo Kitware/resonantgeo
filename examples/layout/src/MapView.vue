@@ -36,7 +36,7 @@ full-screen-viewport
     :floating='false',
     :top='64',
     :toolbar='panel.toolbar',
-    :expanded='panel.expanded',
+    :expanded='sidePanel',
     :footer='true',
     @click-toolbar='infoToolbar.open = !infoToolbar.open'
   )
@@ -95,6 +95,12 @@ full-screen-viewport
 <script>
 export default {
   name: 'MapView',
+  props: {
+    sidePanel: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     window.view = this;
     return {
@@ -127,7 +133,6 @@ export default {
           name: 'polygon',
           icon: 'label_outline',
         }],
-        expanded: true,
       },
       infoToolbar: {
         open: false,

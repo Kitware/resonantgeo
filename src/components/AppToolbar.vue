@@ -1,5 +1,7 @@
 <template lang="pug">
 v-toolbar.resonantgeo-toolbar(app, tabs, fixed, clipped-left)
+  slot(name='panelButton')
+    v-toolbar-side-icon.mx-4(v-if='panelButton', @click='$emit("click-panel")')
   slot(name='left')
     v-tabs.mx-0(
       v-if='tabs.length',
@@ -60,6 +62,10 @@ export default {
     userIcon: {
       type: String,
       default: '',
+    },
+    panelButton: {
+      type: Boolean,
+      default: false,
     },
   },
 };
