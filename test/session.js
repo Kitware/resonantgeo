@@ -16,8 +16,8 @@ const defaultUser = {
 };
 const token = 'deadbeef';
 
-function createMockSession(user = defaultUser) {
-  if (user) {
+function createMockSession(user = defaultUser, options = {}) {
+  if (user && options.global) {
     cookies.set('girderToken', token);
   } else {
     cookies.remove('girderToken');
@@ -27,7 +27,7 @@ function createMockSession(user = defaultUser) {
   mock.onGet(/user\/me/).reply(200, user || null);
   mock.onDelete(/user\/authentication/).reply(200);
 
-  const session = new Session({ axios: instance });
+  const session = new Session({ axios: instance, ...options });
   return { mock, session };
 }
 
@@ -43,4 +43,5 @@ function createGirderVue(user = defaultUser) {
 export {
   createGirderVue,
   createMockSession,
+  defaultUser,
 };
