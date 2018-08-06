@@ -70,23 +70,24 @@ const mixin = {
 };
 
 function Session({ apiRoot = '/api/v1', token = cookies.get('girderToken'), axios = axios_.create() } = {}) {
-  const instance = Object.assign(
+  Object.assign(
     this,
     axios,
     mixin,
     { token, apiRoot },
   );
 
-  instance.interceptors.request.use((config) => {
-    const headers = Object.assign({
-      'Girder-Token': instance.token,
-    }, config.headers);
-    return Object.assign({}, config, {
-      baseURL: instance.apiRoot,
+  axios.interceptors.request.use((config) => {
+    const headers = {
+      'Girder-Token': this.token,
+      ...config.headers,
+    };
+    return {
+      ...config,
+      baseURL: this.apiRoot,
       headers,
-    });
+    };
   });
-  return instance;
 }
 
 export {
