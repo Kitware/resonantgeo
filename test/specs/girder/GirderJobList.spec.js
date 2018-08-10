@@ -160,4 +160,37 @@ describe('GirderJobList.vue', () => {
     expect(mock.history.get.length).to.equal(1);
     expect(mock.history.get[0].url).to.not.match(/sort/);
   });
+
+  it('updates on job notifications', async () => {
+    mock.onGet(/job[^/]/).reply(200, [job]);
+    mock.onGet(/typeandstatus$/).reply(200, {
+      statuses: [],
+      types: [],
+    });
+
+    const wrapper = await mountAndWait(GirderJobList);
+    const stub = sinon.stub(wrapper.vm, 'refreshJobList');
+
+    wrapper.vm.session.sse.$emit('message:job_status');
+    stub.should.have.been.called;
+    stub.resetHistory();
+
+    wrapper.vm.session.sse.$emit('message:job_created');
+    stub.should.have.been.called;
+  });
+
+  it('refresh fetches server', async () => {
+    mock.onGet(/job[^/]/).reply(200, [job]);
+    mock.onGet(/typeandstatus$/).reply(200, {
+      statuses: [],
+      types: [],
+    });
+
+    const wrapper = await mountAndWait(GirderJobList);
+    const fetchCount = mock.history.get.length;
+    wrapper.vm.refreshJobList();
+    await waitForResponses(wrapper);
+
+    expect(mock.history.get.length).to.be.above(fetchCount);
+  });
 });

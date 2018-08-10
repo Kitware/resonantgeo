@@ -32,7 +32,7 @@ function messageHandler(evt) {
 function messageEmitter(notification) {
   if (notification.updated) {
     const updated = new Date(notification.updated);
-    this.since = new Date(Math.max(this.since, updated));
+    this.since = new Date(Math.max(+this.since, +updated));
   }
   this.$emit('message', notification, this);
   this.$emit(`message:${notification.type}`, notification, this);
@@ -68,7 +68,7 @@ class SSEBus extends Vue {
       return;
     }
 
-    const since = Math.floor(+this.since / 1000);
+    const since = Math.ceil(+this.since / 1000);
     const url = `${this.session.apiRoot}/notification/stream?since=${since}`;
     this[eventSource] = new EventSource(url, {
       withCredentials: this.options.withCredentials,
@@ -90,11 +90,10 @@ class SSEBus extends Vue {
   }
 
   startPolling() {
-    const url = `/notification?since=${this.since.toISOString()}`;
     async function pollNotifications() {
       this[poller] = setTimeout(async () => {
         try {
-          const resp = await this.session.get(url);
+          const resp = await this.session.get(`/notification?since=${this.since.toISOString()}`);
           resp.data.forEach(this[emitMessage]);
         } finally {
           pollNotifications.call(this);
