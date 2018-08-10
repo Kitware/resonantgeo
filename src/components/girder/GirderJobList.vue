@@ -40,8 +40,8 @@ export default {
         sortBy: 'updated',
         descending: true,
       },
-
       morePages: true,
+      refresh: 0,
     };
   },
   watch: {
@@ -57,6 +57,7 @@ export default {
     jobs: {
       async get() {
         this.session.user; // reload when the user changes
+        this.refresh; // reload when this value changes
 
         const pg = this.pagination;
         const params = {
@@ -104,6 +105,19 @@ export default {
           types: [],
         };
       },
+    },
+  },
+  created() {
+    // trigger a fetch when a job status update occurs
+    this.session.sse.$on('message:job_status', () => this.refreshJobList());
+    this.session.sse.$on('message:job_created', () => this.refreshJobList());
+  },
+  methods: {
+    refreshJobList() {
+      // Vue with prevent the update happening more than once per animation frame,
+      // but we might want to add an extra debounce to prevent excessive rest
+      // calls.
+      this.refresh += 1;
     },
   },
 };

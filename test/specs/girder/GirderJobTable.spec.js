@@ -70,4 +70,18 @@ describe('GirderJobTable.vue', () => {
     });
     expect(wrapper.vm.totalItems).to.equal(21);
   });
+
+  it('convert progress object to a value', () => {
+    const wrapper = mount(GirderJobTable, {
+      propsData: {
+        jobs: [],
+        pagination: {},
+      },
+    });
+    expect(wrapper.vm.progressAsNumber(null)).to.equal(100);
+    expect(wrapper.vm.progressAsNumber({
+      current: 50,
+      total: 100,
+    })).to.equal(50);
+  });
 });

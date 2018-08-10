@@ -12,11 +12,21 @@ v-card
       td {{ props.item.title }}
       td.one-line {{ props.item.type }}
       td.one-line {{ props.item.updateString }}
-      td.one-line
-        v-chip(small, :color='props.item.statusColor', :text-color='props.item.statusTextColor')
-          v-avatar(v-if='props.item.statusIcon')
-            v-icon {{ props.item.statusIcon }}
-          | {{ props.item.statusText }}
+      td.one-line.status-line(nowrap, :title='props.item.statusText')
+        v-layout(row)
+          v-flex(sm10)
+            v-progress-linear.mr-2.progress-bar(
+              :color='props.item.statusColor',
+              :value='props.item.progressNumber',
+              :indeterminate='!!props.item.indeterminate',
+              height='10'
+            )
+          v-flex.txt-xs-right(s1 pl-1)
+            v-icon.status-icon(
+              :color='props.item.statusColor',
+              :class='{ rotate: props.item.spin }',
+              :size='20'
+            ) {{ props.item.statusIcon }}
 
     template(slot='pageText', slot-scope='props')
       .v-datatable__actions__pagination {{ pageRange.first }}-{{ pageRange.last }}
@@ -85,7 +95,16 @@ export default {
         statusTextColor: statusDef.textColor || 'white',
         statusIcon: statusDef.icon,
         updateString: moment(job.updated).format('dddd, MMMM D, YYYY @ h:mm a'),
+        progressNumber: this.progressAsNumber(job.progress),
+        indeterminate: statusDef.indeterminate,
+        spin: statusDef.spin,
       }, job);
+    },
+    progressAsNumber(progress) {
+      if (!progress) {
+        return 100;
+      }
+      return 100 * (progress.current / progress.total);
     },
   },
 };
@@ -96,4 +115,27 @@ export default {
   white-space nowrap
   overflow hidden
   text-overflow ellipsis
+
+.status-line
+  .progress-bar
+    width 150px
+
+  .progress-text
+    position relative
+    top 1px
+    font-weight 500
+
+  .status-icon
+    height 100%
+    position relative
+    top -1px
+
+.rotate
+  animation rotation 1.5s infinite linear
+  @keyframes rotation
+    from
+      transform rotate(0deg)
+    to
+      transform rotate(359deg)
+
 </style>
