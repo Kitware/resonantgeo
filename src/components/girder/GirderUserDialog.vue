@@ -44,6 +44,10 @@ export default {
       type: String,
       default: 'login',
     },
+    appName: {
+      type: String,
+      default: 'Girder',
+    },
   },
   data() {
     return {
@@ -53,7 +57,7 @@ export default {
   computed: {
     title() {
       if (this.form === 'login') {
-        return 'Log in to Girder';
+        return `Log in to ${this.appName}`;
       } else if (this.form === 'register') {
         return 'Register a new account';
       } else if (this.form === 'reset') {
