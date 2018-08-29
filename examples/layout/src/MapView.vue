@@ -31,6 +31,10 @@ full-screen-viewport
       :zIndex='3'
     )
       v-btn(color='success') Clifton Park
+    geojs-color-legend-widget(
+      :zIndex='100',
+      :categories='categories'
+    )
 
   side-panel(
     :floating='false',
@@ -164,6 +168,15 @@ export default {
         position: [-73.7569, 42.8495],
         offset: [0, -30],
       },
+      categories: [
+        {
+          name: 'Discrete ordinal',
+          type: 'discrete',
+          scale: 'ordinal',
+          domain: ['beijing', 'new york', 'london', 'paris'],
+          colors: ['red', 'green', 'blue', 'orange'],
+        },
+      ],
     };
   },
   methods: {
