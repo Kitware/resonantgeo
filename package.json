@@ -19,7 +19,7 @@
   "module": "src/index.js",
   "dependencies": {
     "axios": "^0.18.0",
-    "geojs": "^0.16.0",
+    "geojs": "^0.18.1",
     "js-cookie": "^2.2.0",
     "lodash-es": "^4.17.10",
     "moment": "^2.22.2",

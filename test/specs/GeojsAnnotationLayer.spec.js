@@ -131,7 +131,8 @@ describe('GeojsAnnotationLayer.vue', () => {
     wrapper.setProps({ drawing: 'rectangle' });
     expect(wrapper.vm.$geojsLayer.mode()).to.equal('rectangle');
 
-    drag({ x: 0, y: 0 }, { x: 10, y: 15 });
+    click({ x: 0, y: 0 });
+    click({ x: 10, y: 15 });
     expect(wrapper.vm.$geojsLayer.mode()).to.equal(null);
 
     interact('mousemove', { x: 100, y: 100 });
