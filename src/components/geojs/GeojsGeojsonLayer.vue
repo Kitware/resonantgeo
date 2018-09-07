@@ -40,7 +40,7 @@ export default {
     this.createLayer('feature', {
       opacity: this.opacity,
     });
-    this.$geojsReader = this.$geojs.jsonReader({
+    this.$geojsReader = this.$geojs.geojsonReader({
       layer: this.$geojsLayer,
     });
     this.$features = [];
