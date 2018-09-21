@@ -16,6 +16,7 @@
         :jobs='jobs',
         :pagination.sync='pagination',
         :morePages='morePages'
+        @job-click='(e, job)=>$emit("job-click", e, job)'
       )
 </template>
 

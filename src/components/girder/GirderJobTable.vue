@@ -9,24 +9,25 @@ v-card
     @update:pagination='$emit("update:pagination", $event)'
   )
     template(slot='items', slot-scope='props')
-      td {{ props.item.title }}
-      td.one-line {{ props.item.type }}
-      td.one-line {{ props.item.updateString }}
-      td.one-line.status-line(nowrap, :title='props.item.statusText')
-        v-layout(row)
-          v-flex(sm10)
-            v-progress-linear.mr-2.progress-bar(
-              :color='props.item.statusColor',
-              :value='props.item.progressNumber',
-              :indeterminate='!!props.item.indeterminate',
-              height='10'
-            )
-          v-flex.txt-xs-right(s1 pl-1)
-            v-icon.status-icon(
-              :color='props.item.statusColor',
-              :class='{ rotate: props.item.spin }',
-              :size='20'
-            ) {{ props.item.statusIcon }}
+      tr(@click='$emit("job-click", $event, props.item)')
+        td {{ props.item.title }}
+        td.one-line {{ props.item.type }}
+        td.one-line {{ props.item.updateString }}
+        td.one-line.status-line(nowrap, :title='props.item.statusText')
+          v-layout(row)
+            v-flex(sm10)
+              v-progress-linear.mr-2.progress-bar(
+                :color='props.item.statusColor',
+                :value='props.item.progressNumber',
+                :indeterminate='!!props.item.indeterminate',
+                height='10'
+              )
+            v-flex.txt-xs-right(s1 pl-1)
+              v-icon.status-icon(
+                :color='props.item.statusColor',
+                :class='{ rotate: props.item.spin }',
+                :size='20'
+              ) {{ props.item.statusIcon }}
 
     template(slot='pageText', slot-scope='props')
       .v-datatable__actions__pagination {{ pageRange.first }}-{{ pageRange.last }}
