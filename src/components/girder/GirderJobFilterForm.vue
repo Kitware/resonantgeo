@@ -25,7 +25,7 @@ v-card.job-filter(dark color='primary darken-1')
           color='white',
           dark,
           dense,
-          @input='$emit("update:jobType", $event ? $event : null)'
+          @input='$emit("update:jobType", $event)'
         )
       // for when girder's api supports this sort of filtering
       //
@@ -92,7 +92,7 @@ v-card.job-filter(dark color='primary darken-1')
           color='white',
           dark,
           dense,
-          @input='$emit("update:status", $event ? $event : null)'
+          @input='$emit("update:status", $event)'
         )
 </template>
 
